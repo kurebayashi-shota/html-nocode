@@ -1,5 +1,5 @@
 export default function ContentsLayout() {
   return (
-    <main className="flex">ContentsLayout</main>
+    <main className="flex"></main>
   )
 }

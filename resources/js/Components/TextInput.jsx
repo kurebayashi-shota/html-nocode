@@ -27,30 +27,31 @@ export default forwardRef(function TextInput(
                             {...props}
                             ref={localRef}
                             type="radio"
-                            name="layout"
-                            value="title"
+                            name="layout_id"
+                            value="1"
+                            checked={props.value === "1"}
                         />
                         タイトル
                     </label>
-                    {/* <br /> */}
                     <label className='mx-2'>
                         <input
                             {...props}
                             ref={localRef}
                             type="radio"
-                            name="layout"
-                            value="simple"
+                            name="layout_id"
+                            value="2"
+                            checked={props.value === "2"}
                         />
                         シンプル
                     </label>
-                    {/* <br /> */}
                     <label className='mx-2'>
                         <input
                             {...props}
                             ref={localRef}
                             type="radio"
-                            name="layout"
-                            value="step"
+                            name="layout_id"
+                            value="3"
+                            checked={props.value === "3"}
                         />
                         手順
                     </label>

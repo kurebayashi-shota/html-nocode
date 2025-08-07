@@ -9,7 +9,7 @@ import SimpleLayout from '../Template/SimpleLayout';
 
 export default function ContentsLayout() {
   const { data, setData, post, processing, errors, reset } = useForm({
-      layout: '',
+      layout_id: '',
       agenda: '',
       title: '',
       titleDetail: '',
@@ -18,13 +18,13 @@ export default function ContentsLayout() {
   const submit = (e) => {
       e.preventDefault();
 
-      post(route('register'), {
-          onFinish: () => reset('password', 'password_confirmation'),
+      post(route('posts.store'), {
+          onFinish: () => reset('title', ),
       });
   };
 
   function addForm (){
-    if(data.layout == "simple")
+    if(data.layout_id == "2")
       return (
         <div className='mb-[1rem]'>
             <InputLabel htmlFor="titleDetail" value="タイトル下部" />
@@ -51,12 +51,12 @@ export default function ContentsLayout() {
                   <InputLabel htmlFor="layout" value="レイアウトの選択" />
                   <TextInput
                       id="layout"
-                      name="layout"
-                      value={data.layout}
+                      name="layout_id"
+                      value={data.layout_id}
                       className="mt-1 block w-full"
                       autoComplete="layout"
                       isFocused={true}
-                      onChange={(e) => setData('layout', e.target.value)}
+                      onChange={(e) => setData('layout_id', e.target.value)}
                       inputType="radio"
                       required
                   />

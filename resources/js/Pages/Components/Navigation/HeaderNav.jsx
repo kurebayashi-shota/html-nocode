@@ -17,6 +17,18 @@ export default function HeadeNav({auth}) {
             ) : (
                 <>
                     <Link
+                        href={route('preview')}
+                        className={headerNavClass}
+                        >
+                        編集
+                        </Link>
+                    <Link
+                        href={route('preview')}
+                        className={headerNavClass}
+                        >
+                        プレビュー
+                    </Link>
+                    <Link
                         href={route('login')}
                         className={headerNavClass}
                         >

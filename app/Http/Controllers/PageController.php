@@ -9,6 +9,15 @@ use App\Models\Page;
 
 class PageController extends Controller
 {
+    public function index()
+    {
+        $pages = Page::all();
+        return Inertia::render(
+            'Components/Template/TempLayout',
+            ['pages' => $pages,]
+        );
+    }
+
     function store (Request $request):Response
     {
         $layout_id = $request->input("layout_id");

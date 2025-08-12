@@ -3,11 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 use App\Models\Layout;
 
 class LayoutController extends Controller
 {
-    function store (Request $request):Layout
+    function index ()
     {
+        $layouts = Layout::all();
+        return Inertia::render(
+            'Welcome',
+            ["layouts" => $layouts,]
+        );
     }
 }

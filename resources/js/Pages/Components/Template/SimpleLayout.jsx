@@ -1,23 +1,26 @@
 import React from 'react';
 // import { useAddData } from '../Hooks/useAddData'
 // import { useAddArrow } from '../Hooks/useAddArrow'
+import { usePage } from '@inertiajs/react';
 import TitleLabel from './Parts/Title/TitleLabel';
 // import Logo from '../../Chapter1/Components/Pages/Components/Logo'
 
 export default function SimpleLayout({ className, data, chapter }) {
   // let data = useAddData({chapter});
   // let arrow = useAddArrow(data[dataNum].Arrow);
+  const previewData = usePage().props;
+  data = previewData.pages ? previewData.pages[0] : data;
   return (
-    <div className={`w-[100%] ${className}`}>
+    <div className={`${className}`}>
       <TitleLabel
-        className="mt-10"
+        className=""
         data={data}
       >
         {data.agenda}
       </TitleLabel>
 
       <div
-        className="mt-[3rem] grid place-items-center min-h-[100%]"
+        className="-mt-[7%] flex justify-center items-center min-h-screen"
       >
         <section className='text-center'>
           <h2
@@ -30,8 +33,6 @@ export default function SimpleLayout({ className, data, chapter }) {
           >
             {data.titleDetail}
           </div>
-        </section>
-        <section className='flex'>
         </section>
       </div>
     </div>

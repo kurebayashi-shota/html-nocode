@@ -4,8 +4,7 @@ import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import { useForm } from '@inertiajs/react';
-import back2 from '@/assets/images/back2.jpg';
-import SimpleLayout from '../Template/SimpleLayout';
+import TempLayout from '../Template/TempLayout';
 
 export default function ContentsLayout() {
   const { data, setData, post, processing, errors, reset } = useForm({
@@ -23,10 +22,31 @@ export default function ContentsLayout() {
       });
   };
 
-  function addForm (){
+  function addAgenda(){
+    if(data.layout_id == "2")
+      return(
+      <div className='mr-[1rem]'>
+        <InputLabel htmlFor="agenda" value="目次" />
+        <TextInput
+            id="agenda"
+            name="agenda"
+            value={data.agenda}
+            className="mt-1 block w-full"
+            autoComplete="agenda"
+            isFocused={true}
+            onChange={(e) => setData('agenda', e.target.value)}
+            inputType="input"
+            required
+        />
+        <InputError message={errors.name} className="mt-2" />
+    </div>
+    )
+  }
+
+  function addTitleDetail (){
     if(data.layout_id == "2")
       return (
-        <div className='mb-[1rem]'>
+        <div className='mr-[1rem]'>
             <InputLabel htmlFor="titleDetail" value="タイトル下部" />
             <TextInput
                 id="titleDetail"
@@ -44,10 +64,10 @@ export default function ContentsLayout() {
       )
   }
   return (
-    <main className="flex">
-      <GuestLayout className="rounded-l-xl w-[30%] pl-[1rem]" noLogo={true}>
-          <form onSubmit={submit}>
-          <div className='mb-[1rem]'>
+    <main className="">
+      <GuestLayout className="rounded-t-xl px-[1rem] xl:px-[5rem] xl:mx-[5rem]" noLogo={true}>
+          <form className='flex' onSubmit={submit}>
+              <div className='mr-[1rem]'>
                   <InputLabel htmlFor="layout" value="レイアウトの選択" />
                   <TextInput
                       id="layout"
@@ -62,49 +82,32 @@ export default function ContentsLayout() {
                   />
                   <InputError message={errors.name} className="mt-2" />
               </div>
-              <div className='mb-[1rem]'>
-                  <InputLabel htmlFor="agenda" value="目次" />
-                  <TextInput
-                      id="agenda"
-                      name="agenda"
-                      value={data.agenda}
-                      className="mt-1 block w-full"
-                      autoComplete="agenda"
-                      isFocused={true}
-                      onChange={(e) => setData('agenda', e.target.value)}
-                      inputType="input"
-                      required
-                  />
-                  <InputError message={errors.name} className="mt-2" />
+              <div>
+                {addAgenda()}
+                <div className='mt-2 mr-[1rem]'>
+                    <InputLabel htmlFor="title" value="タイトル" />
+                    <TextInput
+                        id="title"
+                        name="title"
+                        value={data.title}
+                        className="mt-1 block w-full"
+                        autoComplete="title"
+                        isFocused={true}
+                        onChange={(e) => setData('title', e.target.value)}
+                        inputType="input"
+                        required
+                    />
+                    <InputError message={errors.name} className="mt-2" />
+                </div>
               </div>
-              <div className='mb-[1rem]'>
-                  <InputLabel htmlFor="title" value="タイトル" />
-                  <TextInput
-                      id="title"
-                      name="title"
-                      value={data.title}
-                      className="mt-1 block w-full"
-                      autoComplete="title"
-                      isFocused={true}
-                      onChange={(e) => setData('title', e.target.value)}
-                      inputType="input"
-                      required
-                  />
-                  <InputError message={errors.name} className="mt-2" />
-              </div>
-              {addForm()}
-              <PrimaryButton className="ms-4" disabled={processing}>
+              {addTitleDetail()}
+              <PrimaryButton className="mr-0 ml-auto ms-4" disabled={processing}>
                   登録
               </PrimaryButton>
           </form>
       </GuestLayout>
-      <section className="w-[70%] bg-gray-100 flex items-center justify-center rounded-r-xl">
-        <div
-          className="h-[90%] w-[90%] mx-auto bg-cover rounded-xl shadow-xl"
-          style={{ backgroundImage: `url(${back2})` }}
-        >
-          <SimpleLayout data={data} className="" />
-        </div>        
+      <section className="bg-gray-100 flex items-center justify-center rounded-r-xl xl:mx-[5rem]">
+          <TempLayout data={data} className="scale-[0.95] rounded-xl shadow-xl xl:scale-[0.9]" />
       </section>
     </main>
   )

@@ -1,11 +1,13 @@
 import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
+import { usePage } from '@inertiajs/react';
 
 export default forwardRef(function TextInput(
     { type = 'text', className = '', isFocused = false, inputType, ...props },
     ref,
 ) {
-    // const [ layout, setLayout] = useState("");
+    const inputBaseStyle = "rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500";
     const localRef = useRef(null);
+    const { layouts } = usePage().props;
 
     useImperativeHandle(ref, () => ({
         focus: () => localRef.current?.focus(),
@@ -22,29 +24,24 @@ export default forwardRef(function TextInput(
         case "radio":
             return(
                 <>
-                    <label className='mx-2'>
+                {layouts.map(( layout , index ) =>(
+                    <label
+                        className='block'
+                        key={index}
+                    >
                         <input
                             {...props}
                             ref={localRef}
                             type="radio"
                             name="layout_id"
-                            value="1"
-                            checked={props.value === "1"}
+                            value={index+1}
+                            checked={props.value == index+1}
+                            //↑型変換が必要
                         />
-                        タイトル
+                        {layout.layout}
                     </label>
-                    <label className='mx-2'>
-                        <input
-                            {...props}
-                            ref={localRef}
-                            type="radio"
-                            name="layout_id"
-                            value="2"
-                            checked={props.value === "2"}
-                        />
-                        シンプル
-                    </label>
-                    <label className='mx-2'>
+                ))}
+                    {/* <label className='mx-2'>
                         <input
                             {...props}
                             ref={localRef}
@@ -54,40 +51,30 @@ export default forwardRef(function TextInput(
                             checked={props.value === "3"}
                         />
                         手順
-                    </label>
+                    </label> */}
                 </>
             )
         case "area":
             return (
                 <textarea
+                    rows="4"
                     {...props}
                     type={type}
                     className={
-                        'rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 ' +
+                        `${inputBaseStyle}` +
                         className
                     }
                     ref={localRef}
                 />
             );
         case "input":
-            return (
-                <input
-                    {...props}
-                    type={type}
-                    className={
-                        'rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 ' +
-                        className
-                    }
-                    ref={localRef}
-                />
-            );
         default :
             return (
                 <input
                     {...props}
                     type={type}
                     className={
-                        'rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 ' +
+                        `w-[10rem] ${inputBaseStyle}` +
                         className
                     }
                     ref={localRef}

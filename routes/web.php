@@ -12,8 +12,8 @@ use Inertia\Inertia;
 //         'canLogin' => Route::has('login'),
 //         'canRegister' => Route::has('register'),
 //     ]);
-// });  ログインを実装した時に下を組み込む?
-Route::get('/',[LayoutController::class, 'index']);
+// });  ログインを実装した時に下を上に組み込む?
+Route::get('/',[LayoutController::class, 'index'])->name('/');
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
@@ -26,5 +26,8 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::post('/posts',[PageController::class, 'store'])->name('posts.store');
+Route::put('/update/{id}',[PageController::class, 'update'])->name('posts.update');
 Route::get('/preview',[PageController::class, 'index'])->name('preview');
+Route::get('/preview/{id}',[PageController::class, 'show']);
+Route::get('/edit/{id}',[PageController::class, 'edit']);
 require __DIR__.'/auth.php';

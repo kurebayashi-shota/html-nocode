@@ -7,6 +7,18 @@ export default function HeadeNav({auth}) {
       <Head title="NoCodeTool" />
       <header className="h-[3rem] gap-2 text-[1.5rem] font-bold">
         <nav className="-mx-3 flex flex-1 justify-end">
+            <Link
+                href={route('/')}
+                className={headerNavClass}
+                >
+                作成(ホーム)
+            </Link>
+            <Link
+                href={route('preview')}
+                className={headerNavClass}
+                >
+                プレビュー
+            </Link>
             {auth.user ? (
                 <Link
                     href={route('dashboard')}
@@ -16,18 +28,6 @@ export default function HeadeNav({auth}) {
                 </Link>
             ) : (
                 <>
-                    <Link
-                        href={route('preview')}
-                        className={headerNavClass}
-                        >
-                        編集
-                        </Link>
-                    <Link
-                        href={route('preview')}
-                        className={headerNavClass}
-                        >
-                        プレビュー
-                    </Link>
                     <Link
                         href={route('login')}
                         className={headerNavClass}

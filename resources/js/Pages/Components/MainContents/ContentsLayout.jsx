@@ -3,23 +3,29 @@ import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
-import { useForm } from '@inertiajs/react';
+import { useForm, usePage } from '@inertiajs/react';
 import TempLayout from '../Template/TempLayout';
 
 export default function ContentsLayout() {
-  const { data, setData, post, processing, errors, reset } = useForm({
-      layout_id: '',
+  const { pages, layout } = usePage().props;
+  const { data, setData, post, put, processing, errors, reset } = useForm({
+      layout_id: pages?.layout_id | '',
       agenda: '',
       title: '',
-      titleDetail: '',
+      title_detail: '',
   });
 
   const submit = (e) => {
       e.preventDefault();
-
-      post(route('posts.store'), {
+      if(pages){
+        put(route('posts.update', { id: pages[0].id }), {
           onFinish: () => reset('title', ),
-      });
+        });
+      }else{
+        post(route('posts.store'), {
+          onFinish: () => reset('title', ),
+        });
+      }
   };
 
   function addAgenda(){
@@ -37,6 +43,7 @@ export default function ContentsLayout() {
             onChange={(e) => setData('agenda', e.target.value)}
             inputType="input"
             required
+            placeholder={pages ? pages.agenda : ""}
         />
         <InputError message={errors.name} className="mt-2" />
     </div>
@@ -47,27 +54,29 @@ export default function ContentsLayout() {
     if(data.layout_id == "2")
       return (
         <div className='mr-[1rem]'>
-            <InputLabel htmlFor="titleDetail" value="タイトル下部" />
+            <InputLabel htmlFor="title_detail" value="タイトル下部" />
             <TextInput
-                id="titleDetail"
-                name="titleDetail"
-                value={data.titleDetail}
+                id="title_detail"
+                name="title_detail"
+                value={data.title_detail}
                 className="mt-1 block w-full"
-                autoComplete="titleDetail"
+                autoComplete="title_detail"
                 isFocused={true}
-                onChange={(e) => setData('titleDetail', e.target.value)}
+                onChange={(e) => setData('title_detail', e.target.value)}
                 inputType="area"
                 required
-            />
+                placeholder={pages ? pages.titleDetail : ""}
+                />
             <InputError message={errors.name} className="mt-2" />
         </div>
       )
   }
+
   return (
     <main className="">
-      <GuestLayout className="rounded-t-xl px-[1rem] xl:px-[5rem] xl:mx-[5rem]" noLogo={true}>
-          <form className='flex' onSubmit={submit}>
-              <div className='mr-[1rem]'>
+      <GuestLayout className="rounded-t-xl px-[1rem] xl:px-[5rem] xl:mx-[5rem]" noLogo={true} layout_id={pages ? pages.layout_id : ""}>
+          <form className='w-full flex' onSubmit={submit}>
+              <div className='mr-[1rem] bg-[#F9FAFB] rounded-xl'>
                   <InputLabel htmlFor="layout" value="レイアウトの選択" />
                   <TextInput
                       id="layout"
@@ -79,8 +88,14 @@ export default function ContentsLayout() {
                       onChange={(e) => setData('layout_id', e.target.value)}
                       inputType="radio"
                       required
-                  />
+                      checked={pages && pages.layout_id === layout.id}
+                      />
                   <InputError message={errors.name} className="mt-2" />
+                  {layout && 
+                    <div className='text-[0.8rem] text-[tomato]'>
+                      今は{layout}で登録<br/>されています。
+                    </div>
+                  }
               </div>
               <div>
                 {addAgenda()}
@@ -96,13 +111,14 @@ export default function ContentsLayout() {
                         onChange={(e) => setData('title', e.target.value)}
                         inputType="input"
                         required
-                    />
+                        placeholder={pages ? pages.title : ""}
+                        />
                     <InputError message={errors.name} className="mt-2" />
                 </div>
               </div>
               {addTitleDetail()}
               <PrimaryButton className="mr-0 ml-auto ms-4" disabled={processing}>
-                  登録
+                  {pages ? "変更":"登録"}
               </PrimaryButton>
           </form>
       </GuestLayout>

@@ -3,10 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Page;
 
 class Layout extends Model
 {
-    protected $fillable = ['layouts'];
+    protected $fillable = ['name'];
 
     public function pages()
     {

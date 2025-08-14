@@ -10,10 +10,10 @@ class LayoutController extends Controller
 {
     function index ()
     {
-        $layouts = Layout::all();
+        $name = Layout::all();
         return Inertia::render(
             'Welcome',
-            ["layouts" => $layouts,]
+            ["layouts" => $name,]
         );
     }
 }

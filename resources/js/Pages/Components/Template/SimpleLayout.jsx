@@ -9,7 +9,7 @@ export default function SimpleLayout({ className, data, chapter }) {
   // let data = useAddData({chapter});
   // let arrow = useAddArrow(data[dataNum].Arrow);
   const previewData = usePage().props;
-  data = previewData.pages ? previewData.pages[0] : data;
+  data = previewData.page ? previewData.page : data;
   return (
     <div className={`${className}`}>
       <TitleLabel

@@ -2,13 +2,13 @@ import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 're
 import { usePage } from '@inertiajs/react';
 
 export default forwardRef(function TextInput(
-    { type = 'text', className = '', isFocused = false, inputType, ...props },
+    { type = 'text', className = '', isFocused = false, inputType, placeholder, ...props },
     ref,
 ) {
     const inputBaseStyle = "rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500";
     const localRef = useRef(null);
     const { layouts } = usePage().props;
-
+    
     useImperativeHandle(ref, () => ({
         focus: () => localRef.current?.focus(),
     }));
@@ -38,7 +38,7 @@ export default forwardRef(function TextInput(
                             checked={props.value == index+1}
                             //↑型変換が必要
                         />
-                        {layout.layout}
+                        {layout.name}
                     </label>
                 ))}
                     {/* <label className='mx-2'>
@@ -78,6 +78,7 @@ export default forwardRef(function TextInput(
                         className
                     }
                     ref={localRef}
+                    placeholder={placeholder}
                 />
             );
     }

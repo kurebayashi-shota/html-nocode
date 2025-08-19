@@ -31,7 +31,7 @@ export default function SimpleLayout({ className, data, chapter }) {
           <div
             className='mt-2 w-[30rem] mx-auto xl:text-[2rem] xl:w-[50rem]'
           >
-            {data.titleDetail}
+            {data.title_detail}
           </div>
         </section>
       </div>

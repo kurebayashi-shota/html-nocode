@@ -22,11 +22,15 @@ class PageController extends Controller
 
     public function show($id)
     {
+        $pages = Page::all();
         $page = Page::Find($id);
 
         return Inertia::render(
             'Components/Template/TempLayout',
-            ['page'=>$page,]
+            [
+                'pages'=>$pages,
+                'page'=>$page,
+            ]
         );
     }
 
@@ -50,13 +54,15 @@ class PageController extends Controller
     public function edit($id)
     {
         $page = Page::findOrFail($id);
+        $pages = Page::all();
         $layout = $page->layout?->name;
         $layouts = Layout::all();
 
         return Inertia::render(
             'Welcome',
             [
-                'pages' => $page,
+                'page' => $page,
+                'pages' => $pages,
                 'layout' => $layout,
                 'layouts' => $layouts,
             ]

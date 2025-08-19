@@ -65,6 +65,7 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 -React.js
 -Inertia.js
 -TailWindCss
+-MaterialUi
 
 [アプリの内容]
 クライアントが HTML への記述内容を入力フォームに入力して
@@ -81,18 +82,22 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 --編集画面(編集・プレビュー)
 --実際の画面表示
 
-[ER]
-ユーザー:ID=主キー
+[ER] ID=主キー
+
+User テーブル
 ID/name/email/pass
 
-サイト全体
+?サイト全体
 ID/project/user/
 
-プロジェクト
+?プロジェクト
 ID/pages
 
-1 ページ毎のデータ
-ID/項目に応じたカラム
+Pages テーブル
+ID/layout_id/agenda/title/title_detail/created_at/updated_at
+
+Layouts テーブル
+ID/name/created_at/updated_at
 
 [工程]
 --React-v1.0.1:フロントの基本構成を作る
@@ -110,6 +115,10 @@ ID/項目に応じたカラム
 --Laravel-v1.0.4:編集後データの受け取りと DB への送信
 --Laravel-v1.0.4:DB への反映確認
 --React-v1.0.5:フッターやページング
+--React-v1.0.5:他レイアウトの追加
+--React-v1.0.5:登録と編集の調整
+--Laravel-v1.0.6:オブジェクトの格納
+--React-v1.0.6:フロント側の調整
 --DB:DB の構築
 --Laravel:リレーション定義
 --DB:プロジェクトとの連携
@@ -129,11 +138,25 @@ ID/項目に応じたカラム
 
 ### Deprecated — 非推奨になった機能
 
+## [1.0.6] - 2025-08-19
+
+### Added
+
+### change
+
 ## [1.0.5] - 2025-08-14
 
 ### Added
 
--   Footer.jsx の追加
+-   ナビゲーションバーの追加
+-   MaterialUi の追加
+-   Agenda,CodeL,StepL の追加
+-   selectLayout の追加
+-   li_elements カラム追加用マイグレーションファイルの作成
+
+### change
+
+-   レイアウトの追加に伴う登録と編集の調整
 
 ## [1.0.4] - 2025-08-12
 
@@ -655,4 +678,64 @@ User::create([
     'name' => 'Taro',
     'email' => 'taro@example.com',
 ]);
+```
+
+# 任意の数のデータを JSON カラム（li_elements）に保存する手順（Laravel + Inertia.js）
+
+## 1. DB マイグレーション
+
+li_elements カラムを JSON 型で追加します。
+
+```php
+Schema::table('pages', function (Blueprint $table) {
+    $table->json('li_elements')->nullable();
+});
+2. モデルの設定（Page.php）
+php
+コードをコピーする
+class Page extends Model
+{
+    protected $fillable = ['title', 'li_elements'];
+
+    protected $casts = [
+        'li_elements' => 'array',
+    ];
+}
+3. フロントエンド（例：React + Inertia.js）
+jsx
+コードをコピーする
+const [liElements, setLiElements] = useState([
+  { text: 'りんご', color: 'red' },
+  { text: 'バナナ', color: 'yellow' },
+]);
+
+const handleSubmit = () => {
+  router.post('/pages', {
+    title: '果物リスト',
+    li_elements: liElements,
+  });
+};
+4. コントローラ（保存処理）
+php
+コードをコピーする
+public function store(Request $request)
+{
+    $validated = $request->validate([
+        'title' => 'required|string|max:255',
+        'li_elements' => 'nullable|array',
+        'li_elements.*.text' => 'required|string',
+        'li_elements.*.color' => 'nullable|string',
+    ]);
+
+    Page::create($validated);
+
+    return redirect()->route('pages.index');
+}
+5. 保存された例（MySQL内のデータ）
+json
+コードをコピーする
+[
+  { "text": "りんご", "color": "red" },
+  { "text": "バナナ", "color": "yellow" }
+]
 ```

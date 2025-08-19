@@ -9,7 +9,7 @@ import TempLayout from '../Template/TempLayout';
 export default function ContentsLayout() {
   const { pages, layout } = usePage().props;
   const { data, setData, post, put, processing, errors, reset } = useForm({
-      layout_id: pages?.layout_id | '',
+      layout_id: pages?.layout_id | 2,
       agenda: '',
       title: '',
       title_detail: '',
@@ -29,7 +29,7 @@ export default function ContentsLayout() {
   };
 
   function addAgenda(){
-    if(data.layout_id == "2")
+    if(data.layout_id !== "1")
       return(
       <div className='mr-[1rem]'>
         <InputLabel htmlFor="agenda" value="目次" />

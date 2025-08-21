@@ -34,18 +34,22 @@ class PageController extends Controller
         );
     }
 
-    function store (Request $request):Response
+    public function store (Request $request)
     {
         $layout_id = $request->input("layout_id");
         $agenda = $request->input('agenda');
         $title = $request->input('title');
         $title_detail = $request->input('title_detail');
+        $li_elements = $request->input('li_elements');
+        $obj_elements = $request->input('obj_elements');
 
         Page::create([
             'agenda' => $agenda,
             'title' => $title,
             'title_detail' => $title_detail,
             'layout_id' => $layout_id,
+            'li_elements' => $li_elements,
+            'obj_elements' => $obj_elements,
         ]);
 
         return Inertia::location('/');
@@ -65,7 +69,9 @@ class PageController extends Controller
                 'pages' => $pages,
                 'layout' => $layout,
                 'layouts' => $layouts,
-            ]
+                'li_elements' => $request->li_elements,
+                'obj_elements' => $request->obj_elements,
+                ]
         );
     }
 
@@ -78,6 +84,8 @@ class PageController extends Controller
             'title' => $request->title,
             'title_detail' => $request->title_detail,
             'layout_id' => $request->layout_id,
+            'li_elements' => $request->li_elements,
+            'obj_elements' => $request->obj_elements,
         ]);
 
         return Inertia::location('/');

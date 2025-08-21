@@ -1,17 +1,13 @@
 import React from 'react';
-// import { useAddData } from '../Hooks/useAddData'
-// import { useAddArrow } from '../Hooks/useAddArrow'
 import { usePage } from '@inertiajs/react';
 import TitleLabel from './Parts/Title/TitleLabel';
 // import Logo from '../../Chapter1/Components/Pages/Components/Logo'
 
-export default function SimpleLayout({ className, data, chapter }) {
-  // let data = useAddData({chapter});
-  // let arrow = useAddArrow(data[dataNum].Arrow);
+export default function SimpleLayout({ className, data, }) {
   const previewData = usePage().props;
   data = previewData.page ? previewData.page : data;
   return (
-    <div className={`${className}`}>
+    <div className={className}>
       <TitleLabel
         className=""
         data={data}

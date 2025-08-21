@@ -119,10 +119,25 @@ ID/name/created_at/updated_at
 --React-v1.0.5:登録と編集の調整
 --Laravel-v1.0.6:オブジェクトの格納
 --React-v1.0.6:フロント側の調整
+--React-v1.0.7:画像の保存フォームを作成
+--Laravel-v1.0.7:バックエンドでの受け取りと DB 保存
+--React-v1.0.7:フロントでの受け取りと描画
 --DB:DB の構築
 --Laravel:リレーション定義
 --DB:プロジェクトとの連携
 --DB:データ確認
+
+# 残タスク
+
+-   ナビゲーションバーのホバーを修正
+-   リストの最大個数指定
+-   画像の保存
+-   目次の作成
+-   プロジェクト毎の作成
+-   アカウントとの紐づけ
+-   カラムの見直し
+-   ContenrsLayout.jsx 内の from タグが親要素いっぱいに広がらない
+-   useSelectCode.jsx 内での layout_id の型変換
 
 [CHANGELOG.md]
 
@@ -138,11 +153,25 @@ ID/name/created_at/updated_at
 
 ### Deprecated — 非推奨になった機能
 
+## [1.0.7] - 2025-08-21
+
+### Added
+
+-
+
+### change
+
+-
+
 ## [1.0.6] - 2025-08-19
 
 ### Added
 
+-   obj_elements カラムの追加
+
 ### change
+
+-   オブジェクト追加用にフロントとバックエンドの修正
 
 ## [1.0.5] - 2025-08-14
 
@@ -159,8 +188,6 @@ ID/name/created_at/updated_at
 -   レイアウトの追加に伴う登録と編集の調整
 
 ## [1.0.4] - 2025-08-12
-
--   ContenrsLayout.jsx 内の from タグが親要素いっぱいに広がらない
 
 ### Added
 
@@ -371,6 +398,20 @@ php artisan make:migration create_component_data_table
 
 ---
 
+## Seeder でのレコード追加例
+
+下記でやると重複の登録を防げる
+
+public function run(): void
+{
+$layouts = ['タイトル', 'シンプル', '手順', 'コード'];
+
+    foreach ($layouts as $layoutName) {
+        Layout::firstOrCreate(['name' => $layoutName]);
+    }
+
+}
+
 ## ✅ モデルの命名規則
 
 ### 📌 基本ルール
@@ -404,7 +445,7 @@ php artisan make:model Product
 | `$table->dateTime('published_at')` | 日時                             | `$table->dateTime('published_at');` |
 | `$table->timestamp('created_at')`  | タイムスタンプ                   | `$table->timestamp('created_at');`  |
 | `$table->decimal('price', 8, 2)`   | 小数（精度とスケール指定）       | `$table->decimal('price', 8, 2);`   |
-| `$table->json('data')`             | JSON データ                      | `$table->json('data');`             |
+| `$table->json('data')`             | JSON データ(オブジェクトで格納)  | `$table->json('data');`             |
 | `$table->uuid('uuid')`             | UUID                             | `$table->uuid('uuid');`             |
 
 ---

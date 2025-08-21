@@ -1,5 +1,5 @@
 import { Link, usePage } from '@inertiajs/react'
-
+import HomeIcon from '@mui/icons-material/Home';
 export default function Navigation() {
   const { pages } = usePage().props;
   return (
@@ -8,13 +8,13 @@ export default function Navigation() {
           ・・・
         </div>
         <div className="text-black absolute -mt-[4rem] opacity-0 transition duration-300 flex w-[31rem] overflow-auto group-hover:opacity-100 bg-white shadow-md border rounded p-2">
-          <Link className='w-[3rem] my-auto flex-shrink-0' href={"/preview/"}>トップ</Link>
+          <Link className='my-auto flex-shrink-0 hover:bg-gray-100 hover:rounded-full' href={"/preview/"}><HomeIcon /></Link>
           {pages.map((page, index)=>(
             <Link
               key={index}
               href={`/preview/${page.id}`}
-              className="px-4 py-2 hover:bg-gray-100"
-            >
+              className="px-4 py-2 hover:bg-gray-100 hover:rounded-full"
+              >
               {page.id}
             </Link>
           ))}

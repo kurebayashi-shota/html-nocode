@@ -13,10 +13,17 @@ class LayoutSeeder extends Seeder
      */
     public function run(): void
     {
-        Layout::insert([
-            ['layout' => 'タイトル'],
-            ['layout' => 'シンプル'],
-            ['layout' => '手順'],
-        ]);
+        $layouts = ['タイトル','シンプル','手順','コード','用語',];
+            foreach ($layouts as $layoutName){
+                Layout::firstOrCreate(['name'=> $layoutName]);
+            }
+        // Layout::insert([ 基本的な記述方法
+        //     ['name' => 'タイトル'],
+        //     ['name' => 'シンプル'],
+        //     ['name' => '手順'],
+        // ]);
+        // Layout::insert([
+        //     ['name' => 'コード'],
+        // ]);
     }
 }

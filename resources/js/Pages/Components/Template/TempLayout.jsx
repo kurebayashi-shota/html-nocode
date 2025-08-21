@@ -16,12 +16,12 @@ export default function TempLayout({ data, className }) {
   return (
     <>
         <div
-          className={`h-screen w-screen bg-cover ${className}`}
+          className={`h-screen w-screen shadow-xl bg-cover ${className}`}
           style={{ backgroundImage: `url(${back2})` }}
         >
           {layoutRespons}
           {pages &&
-            <NavigationBar className="-mt-[10rem]" page={page} pages={pages} />
+            <NavigationBar className="" page={page} pages={pages} />
           }
         </div>
     </>

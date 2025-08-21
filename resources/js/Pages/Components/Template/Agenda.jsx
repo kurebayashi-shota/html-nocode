@@ -8,7 +8,7 @@ export default function Agenda({ className, chapter }) {
   const titleBorderClass = "mt-[1rem] bg-white inline-block border-[2px] border-[#333]";
   return (
     <>
-      <div className={`${className}`}>
+      <div className={className}>
         <Title
           className={`text-[3rem] text-[#174C61] rounded-xl ml-[1rem] xl:ml-[10rem] ${titleBorderClass}`}
         >

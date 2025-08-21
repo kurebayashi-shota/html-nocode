@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('pages', function (Blueprint $table) {
-            $table->json('li_elements')->nullable()->after('title_detail');
+            $table->json('obj_elements')->nullable()->after('li_elements');
         });
     }
 
@@ -22,7 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('pages', function (Blueprint $table) {
-            $table->dropcolumn('li_elements');
+            $table->dropColumn('obj_elements');
         });
     }
 };

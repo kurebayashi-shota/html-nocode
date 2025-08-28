@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Storage;
 use App\Models\Page;
 use App\Models\Layout;
 
@@ -30,6 +31,7 @@ class PageController extends Controller
             [
                 'pages'=>$pages,
                 'page'=>$page,
+                'mode' => "preview"
             ]
         );
     }
@@ -42,7 +44,9 @@ class PageController extends Controller
         $title_detail = $request->input('title_detail');
         $li_elements = $request->input('li_elements');
         $obj_elements = $request->input('obj_elements');
-
+        $path = $request->file('image')->store('images','public');
+        $url = Storage::url($path);
+        
         Page::create([
             'agenda' => $agenda,
             'title' => $title,
@@ -50,6 +54,7 @@ class PageController extends Controller
             'layout_id' => $layout_id,
             'li_elements' => $li_elements,
             'obj_elements' => $obj_elements,
+            'image' => $url,
         ]);
 
         return Inertia::location('/');
@@ -69,9 +74,8 @@ class PageController extends Controller
                 'pages' => $pages,
                 'layout' => $layout,
                 'layouts' => $layouts,
-                'li_elements' => $request->li_elements,
-                'obj_elements' => $request->obj_elements,
-                ]
+                'mode' => "edit"
+            ]
         );
     }
 
@@ -86,6 +90,7 @@ class PageController extends Controller
             'layout_id' => $request->layout_id,
             'li_elements' => $request->li_elements,
             'obj_elements' => $request->obj_elements,
+            'image' => $url,
         ]);
 
         return Inertia::location('/');

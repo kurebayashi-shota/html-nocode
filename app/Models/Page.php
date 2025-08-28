@@ -13,7 +13,8 @@ class Page extends Model
         'title',
         'title_detail',
         'li_elements',
-        'obj_elements'
+        'obj_elements',
+        'image',
     ];
     protected $casts = [ 
         'li_elements' => 'array',

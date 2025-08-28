@@ -1,13 +1,15 @@
+import { useState } from 'react';
+import { useForm, usePage } from '@inertiajs/react';
 import GuestLayout from '@/Layouts/GuestLayout';
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
-import { useForm, usePage } from '@inertiajs/react';
 import TempLayout from '../Template/TempLayout';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 export default function ContentsLayout() {
+  const [ height, setHeight ] = useState("10");
   const { pages, layout } = usePage().props;
   const { data, setData, post, put, processing, errors, reset } = useForm({
       layout_id: pages?.layout_id | 2,
@@ -15,11 +17,27 @@ export default function ContentsLayout() {
       title: '',
       title_detail: '',
       li_elements: [''],
-      obj_elements: [
-        {title:'',value:''}
-      ],
+      obj_elements: [{title:'',value:''},],
+      image: null,
+      image_height: height,
   });
-
+  
+  const [imagePreview, setImagePreview] = useState(null);
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    setData('image', file);
+  
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result);
+      };
+      reader.readAsDataURL(file);
+    } else {
+      setImagePreview(null);
+    }
+  };
+  
   const submit = (e) => {
       e.preventDefault();
       if(pages){
@@ -28,6 +46,7 @@ export default function ContentsLayout() {
         });
       }else{
         post(route('posts.store'), {
+          forceFormData:true,
           onFinish: () => reset('title', ),
         });
       }
@@ -118,7 +137,6 @@ export default function ContentsLayout() {
       const updated = data[fieldName].filter((_, i) => i !== index);
       setData(fieldName, updated);
     };
-    
     return (
       <div className="">
         <div className="flex">
@@ -126,8 +144,8 @@ export default function ContentsLayout() {
           <button
             type="button"
             onClick={addElement}
-            className="ml-[4rem] text-[0.8rem] text-white border-[1px] bg-[#374151] rounded-md px-[5px]"
-          >
+            className="ml-[4rem] text-[0.8rem] text-white border-[1px] bg-[#374151] rounded-md px-[5px] hover:bg-gray-600"
+            >
             +項目追加
           </button>
         </div>
@@ -142,14 +160,14 @@ export default function ContentsLayout() {
                   onChange={(e) =>
                     handleChange(index, "title", e.target.value)
                   }
-                />
+                  />
                 <TextInput
-                  placeholder="値"
+                  placeholder="内容"
                   value={item.value}
                   onChange={(e) =>
                     handleChange(index, "value", e.target.value)
                   }
-                />
+                  />
               </>
             ) : (
               <TextInput
@@ -161,8 +179,8 @@ export default function ContentsLayout() {
             <button
               type="button"
               onClick={() => removeElement(index)}
-              className="bg-[tomato] text-white rounded-md py-[0.4rem]"
-            >
+              className="bg-[tomato] text-white rounded-md py-[0.4rem] hover:bg-[red]"
+              >
               <DeleteIcon />
             </button>
           </div>
@@ -172,7 +190,11 @@ export default function ContentsLayout() {
       </div>
     );
   }
-  return (
+  const handleHeightChange = (value) => {
+    setHeight(value);
+    setData("image_height", value);
+  };
+return (
     <main className="">
       <GuestLayout className="rounded-t-xl px-[1rem] shadow-xl xl:px-[5rem] xl:mx-[5rem]" noLogo={true} layout_id={pages ? pages.layout_id : ""}>
           <form className='w-full flex' onSubmit={submit}>
@@ -217,14 +239,32 @@ export default function ContentsLayout() {
                 </div>
               </div>
               {addTitleDetail()}
-              {addLiElements()}
+              <div>
+                {addLiElements()}
+                <div className='mt-2 mr-[1rem]'>
+                    <InputLabel htmlFor="image" value="画像" />
+                    <TextInput
+                        id="image"
+                        name="image"
+                        type="file"
+                        className="mt-1 block w-full"
+                        autoComplete="image"
+                        isFocused={true}
+                        onChange={handleImageChange}
+                        onHeightChange={handleHeightChange}
+                        inputType="image"
+                        required
+                        />
+                    <InputError message={errors.name} className="mt-2" />
+                </div>
+              </div>
               <PrimaryButton className="mr-0 ml-auto ms-4" disabled={processing}>
                   {pages ? "変更":"登録"}
               </PrimaryButton>
           </form>
       </GuestLayout>
       <section className="bg-gray-100 flex items-center justify-center shadow-xl rounded-b-xl xl:mx-[5rem]">
-          <TempLayout data={data} className="scale-[0.97] rounded-xl xl:scale-[0.9]" />
+          <TempLayout data={data} image={imagePreview} className="scale-[0.97] rounded-xl xl:scale-[0.9]" />
       </section>
     </main>
   )

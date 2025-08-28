@@ -780,3 +780,137 @@ json
   { "text": "バナナ", "color": "yellow" }
 ]
 ```
+
+Laravel + React + Inertia での「登録・編集・閲覧」を同一コンポーネントで制御しようとしている意図は非常に理解できますが、今のコードのように data と page を手動で合成していると、スケーリングや保守がつらくなっていく傾向があります。
+
+✳️ 現状の問題点
+
+あなたのコードで起きているであろう問題はこうです：
+
+data が undefined だったら page を使う（OK）
+
+でも、data.xxx が空文字 "" だった場合にだけ page.xxx を使うようなロジックになっていて、状態が混在していて分かりづらい
+
+編集と表示で data を基準にしつつも page を参照しにいっているのが煩雑
+
+特に、"" を「未入力の判定」として扱ってるのがやや危険（null や undefined との区別が曖昧）
+
+✅ おすすめの改善方法
+🧠 状態を判定する「モード」を導入しよう
+
+まず、「今このコンポーネントがどのモードで動いているか」を判断する mode を導入しましょう。
+
+// props
+type Props = {
+mode: 'view' | 'edit' | 'create',
+data?: any,
+image?: string,
+className?: string
+}
+
+usePage().props からの値は page というより「初期値」として割り切って考えるとスッキリします。
+
+🔁 状態の合成は useMemo でやる
+import React, { useMemo } from 'react';
+import TitleLabel from './Parts/Title/TitleLabel';
+import { usePage } from '@inertiajs/react';
+
+export default function SimpleLayout({ className, data, image, mode = 'view' }) {
+const { layout_id, agenda, title, title_detail, li_elements, obj_elements, image: pageImage } = usePage().props;
+
+const displayData = useMemo(() => {
+if (mode === 'create') {
+// 新規作成: 入力中の data を優先
+return {
+layout_id: data?.layout_id ?? '',
+agenda: data?.agenda ?? '',
+title: data?.title ?? '',
+title_detail: data?.title_detail ?? '',
+li_elements: data?.li_elements ?? [],
+obj_elements: data?.obj_elements ?? {},
+image: data?.image ?? '',
+};
+}
+
+    if (mode === 'edit') {
+      // 編集: data に変更があれば優先、なければ page の値
+      return {
+        layout_id: data?.layout_id ?? layout_id,
+        agenda: data?.agenda ?? agenda,
+        title: data?.title ?? title,
+        title_detail: data?.title_detail ?? title_detail,
+        li_elements: data?.li_elements ?? li_elements,
+        obj_elements: data?.obj_elements ?? obj_elements,
+        image: data?.image ?? pageImage,
+      };
+    }
+
+    // 閲覧: すべて page の値
+    return {
+      layout_id,
+      agenda,
+      title,
+      title_detail,
+      li_elements,
+      obj_elements,
+      image: pageImage,
+    };
+
+}, [mode, data, layout_id, agenda, title, title_detail, li_elements, obj_elements, pageImage]);
+
+return (
+
+<div className={className}>
+<TitleLabel className="" data={displayData}>
+{displayData.agenda}
+</TitleLabel>
+
+      <div className="h-[95%] flex flex-col justify-center">
+        <section className="text-center">
+          <h2 className="font-bold text-[2rem] border-b-[3px] border-b-[tomato] inline-block xl:text-[3rem]">
+            {displayData.title}
+          </h2>
+          <div className="w-[30rem] mx-auto xl:text-[2rem] xl:w-[50rem]">
+            {displayData.title_detail}
+          </div>
+        </section>
+        {displayData.image && (
+          <section className="mt-10 mx-auto">
+            <img
+              className="h-40 w-auto"
+              src={image ?? displayData.image}
+              alt=""
+            />
+          </section>
+        )}
+      </div>
+    </div>
+
+);
+}
+
+💡 呼び出し側はこう使う
+新規登録ページ
+<SimpleLayout mode="create" data={inputData} />
+
+編集ページ
+<SimpleLayout mode="edit" data={inputData} />
+
+閲覧ページ
+<SimpleLayout mode="view" />
+
+🎯 メリット
+
+明示的に「今何をしたいのか（create/edit/view）」がわかる
+
+useMemo により余分な再計算を防げる
+
+データの優先順位が明確で、読みやすくなる
+
+既存の data or page のマージロジックが簡潔になる
+
+もしさらに柔軟にしたい場合は、React Hook Form や Zustand などで data の状態管理を統一する方法もありますが、現状の要件だと、今回のような mode + useMemo パターンでかなりスッキリするはずです。
+
+必要なら、呼び出し側での状態管理の設計や、Inertia 側でのページ送信ロジック（useForm の活用など）も一緒に見られます。ご希望があれば教えてください！
+
+Laravel+react+Inertia で開発しています。 データの登録、データの編集、既登録データの描画ページを全て同コンポーネントで管理していて、フロントからの入力情報を data で管理していて既登録データを page で管理していますが、登録の場合はフロントでの入力情報を追加したい。 データの編集は先に page を参照して、data に更新がかかれば data を参照に切り替えたい。 既登録は page のみという感じしたいですが、うまくいかないので何かいい方法はありますか? import React from 'react'; import TitleLabel from './Parts/Title/TitleLabel'; import { usePage } from '@inertiajs/react'; export default function SimpleLayout({ className, data, image, }) { const { page } = usePage().props; data = data ? data : page; if(data.layout_id == ""){ data.layout_id = page.layout_id } if(data.agenda == ""){ data.agenda = page.agenda } if(data.title == ""){ data.title = page.title } if(data.title_detail == ""){ data.title_detail = page.title_detail } if(data.li_elements == ""){ data.li_elements = page.li_elements } if(data.obj_elements == ""){ data.obj_elements = page.obj_elements } if(data.image == ""){ data.image = page.image } return ( <div className={className}> <TitleLabel className="" data={data} > {data.agenda} </TitleLabel> <div className="h-[95%] flex flex-col justify-center" > <section className='text-center'> <h2 className={font-bold text-[2rem] border-b-[3px] border-b-[tomato] inline-block xl:text-[3rem]} > {data.title} </h2> <div className='w-[30rem] mx-auto xl:text-[2rem] xl:w-[50rem]' > {data.title_detail} </div> </section> {data.image && <section className='mt-10 mx-auto'> <img className='h-40 w-auto' src={image ? image : data.image} alt="" /> </section> } </div> </div> ) }

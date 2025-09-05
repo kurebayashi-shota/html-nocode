@@ -1,17 +1,17 @@
 export default function selectMode({ page, data, mode }) {
     switch(mode){
         case "edit":
-            if(data.image=="" && page.image){
-                data.image = page.image
+            if(data.obj_images[0].path == "" && page.obj_images[0].path){
+                data.obj_images[0].path = page.obj_images[0].path
             }
-            if(data.title=="" && page.title){
+            if(data.layout_id == "" && page.layout_id){
+                data.layout_id = page.layout_id
+            }
+            if(data.title == "" && page.title){
                 data.title = page.title
             }
-            if(data.agenda=="" && page.agemda){
+            if(data.agenda == "" && page.agenda){
                 data.agenda = page.agenda
-            }
-            if(data.layout_id=="" && page.layout_id){
-                data.layout_id = page.layout_id
             }
             return data
         case "preview": return page;

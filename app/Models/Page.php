@@ -14,11 +14,12 @@ class Page extends Model
         'title_detail',
         'li_elements',
         'obj_elements',
-        'image',
+        'obj_images',
     ];
     protected $casts = [ 
         'li_elements' => 'array',
         'obj_elements' => 'array',
+        'obj_images' => 'array',
     ];
     
     public function layout()

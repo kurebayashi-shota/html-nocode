@@ -122,6 +122,10 @@ ID/name/created_at/updated_at
 --React-v1.0.7:画像の保存フォームを作成
 --Laravel-v1.0.7:バックエンドでの受け取りと DB 保存
 --React-v1.0.7:フロントでの受け取りと描画
+--React-v1.0.8:画像をオブジェクトで格納
+--DB-v1.0.8:DB の変更
+--Laravel-v1.0.8:バックエンドの調整
+--React-v1.0.8:
 --DB:DB の構築
 --Laravel:リレーション定義
 --DB:プロジェクトとの連携
@@ -138,6 +142,7 @@ ID/name/created_at/updated_at
 -   カラムの見直し
 -   ContenrsLayout.jsx 内の from タグが親要素いっぱいに広がらない
 -   useSelectCode.jsx 内での layout_id の型変換
+-   入力フォーム下部に追加ボタン(画像、li)
 
 [CHANGELOG.md]
 
@@ -153,7 +158,7 @@ ID/name/created_at/updated_at
 
 ### Deprecated — 非推奨になった機能
 
-## [1.0.7] - 2025-08-21
+## [1.0.8] - 2025-09-01
 
 ### Added
 
@@ -162,6 +167,18 @@ ID/name/created_at/updated_at
 ### change
 
 -
+
+## [1.0.7] - 2025-08-21
+
+### Added
+
+-   image,image_height カラムの追加
+-   上記保存機能
+-   selectMode でのデータ取得方法
+
+### change
+
+-   Page コントローラーから mode を渡す。
 
 ## [1.0.6] - 2025-08-19
 

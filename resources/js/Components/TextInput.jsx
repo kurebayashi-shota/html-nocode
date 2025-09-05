@@ -82,10 +82,9 @@ export default forwardRef(function TextInput(
                         type={type}
                         className={
                             `${addInputWidth()} ${inputBaseStyle}` +
-                            className                            
+                            className
                         }
                         ref={localRef}
-                        placeholder={placeholder}
                     />
                     <label htmlFor="small" className='mr-1'>
                         <input

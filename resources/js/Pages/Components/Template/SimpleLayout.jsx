@@ -2,7 +2,8 @@ import React from 'react';
 import TitleLabel from './Parts/Title/TitleLabel';
 
 export default function SimpleLayout({ className, data, image, }) {
-    
+  const imagesData = image ? image : data.obj_images[0].path;
+  
   return (
     <div className={className}>
       <TitleLabel
@@ -25,12 +26,12 @@ export default function SimpleLayout({ className, data, image, }) {
             {data.title_detail}
           </div>
         </section>
-        {image &&
+        {imagesData &&
         <section className='mt-10 mx-auto'>
           <img
             className="w-auto"
-            style={data.image_height ? { height:`${data.image_height}rem`}:{height:"10rem"}}
-            src={image ? image : data.image}
+            style={data.obj_images[0].height ? { height:`${data.obj_images[0].height}rem`}:{height:"10rem"}}
+            src={imagesData}
             alt=""
             />
         </section>

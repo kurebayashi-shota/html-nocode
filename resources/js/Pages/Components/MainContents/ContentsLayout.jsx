@@ -12,36 +12,53 @@ export default function ContentsLayout() {
   const [ height, setHeight ] = useState("10");
   const { pages, layout } = usePage().props;
   const { data, setData, post, put, processing, errors, reset } = useForm({
-      layout_id: pages?.layout_id | 2,
+      layout_id: pages? pages[0].layout_id : 2,
       agenda: '',
       title: '',
       title_detail: '',
       li_elements: [''],
-      obj_elements: [{title:'',value:''},],
-      image: null,
-      image_height: height,
+      obj_elements: [{ title:'', value:'', },],
+      obj_images: [{ path:'', height:'' },],
   });
   
   const [imagePreview, setImagePreview] = useState(null);
   const handleImageChange = (e) => {
     const file = e.target.files[0];
-    setData('image', file);
-  
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImagePreview(reader.result);
-      };
-      reader.readAsDataURL(file);
-    } else {
-      setImagePreview(null);
-    }
+    if(!file)return;
+    setData((prevData) => {
+      const updatedImages =[...prevData.obj_images];
+      updatedImages[0].path = file;
+      return { ...prevData, obj_images:updatedImages};
+    })
+    const reader = new FileReader();
+    reader.onloadend = () => setImagePreview(reader.result);
+    reader.readAsDataURL(file);
+    // setData('image', file);
+    // if (file) {
+    //   const reader = new FileReader();
+    //   reader.onloadend = () => {setImagePreview(reader.result);};
+    //   reader.readAsDataURL(file);
+    // } else {
+    //   setImagePreview(null);
+    // }
+  };
+  const handleHeightChange = (value) => {
+    setHeight(value);
+    setData((prevData)=> {
+      const updatedImages = [...prevData.obj_images];
+      updatedImages[0].height = value;
+      return { ...prevData, obj_images: updatedImages};
+    });
   };
   
   const submit = (e) => {
       e.preventDefault();
       if(pages){
         put(route('posts.update', { id: pages[0].id }), {
+          forceFormData:true,
+          onBefore: () => console.log("sending:", data),
+  onSuccess: () => console.log("success"),
+  onError: (e) => console.log("error", e),
           onFinish: () => reset('title', ),
         });
       }else{
@@ -190,10 +207,6 @@ export default function ContentsLayout() {
       </div>
     );
   }
-  const handleHeightChange = (value) => {
-    setHeight(value);
-    setData("image_height", value);
-  };
 return (
     <main className="">
       <GuestLayout className="rounded-t-xl px-[1rem] shadow-xl xl:px-[5rem] xl:mx-[5rem]" noLogo={true} layout_id={pages ? pages.layout_id : ""}>
@@ -232,7 +245,6 @@ return (
                         isFocused={true}
                         onChange={(e) => setData('title', e.target.value)}
                         inputType="input"
-                        required
                         placeholder={pages ? pages.title : ""}
                         />
                     <InputError message={errors.name} className="mt-2" />
@@ -253,9 +265,7 @@ return (
                         onChange={handleImageChange}
                         onHeightChange={handleHeightChange}
                         inputType="image"
-                        required
                         />
-                    <InputError message={errors.name} className="mt-2" />
                 </div>
               </div>
               <PrimaryButton className="mr-0 ml-auto ms-4" disabled={processing}>

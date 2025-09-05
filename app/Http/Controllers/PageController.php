@@ -44,9 +44,10 @@ class PageController extends Controller
         $title_detail = $request->input('title_detail');
         $li_elements = $request->input('li_elements');
         $obj_elements = $request->input('obj_elements');
-        $path = $request->file('image')->store('images','public');
+        $path = $request->file('obj_images.0.path')->store('images','public');
         $url = Storage::url($path);
-        
+        $height = $obj_images[0]['height'] ?? '';
+
         Page::create([
             'agenda' => $agenda,
             'title' => $title,
@@ -54,7 +55,12 @@ class PageController extends Controller
             'layout_id' => $layout_id,
             'li_elements' => $li_elements,
             'obj_elements' => $obj_elements,
-            'image' => $url,
+            'obj_images' => [
+                [
+                    'path' => $url,
+                    'height' => $height,
+                ]
+            ],
         ]);
 
         return Inertia::location('/');
@@ -81,6 +87,7 @@ class PageController extends Controller
 
     public function update(Request $request, $id)
     {
+        dd($request);
         $page = Page::find($id);
 
         $page->update([
@@ -90,7 +97,12 @@ class PageController extends Controller
             'layout_id' => $request->layout_id,
             'li_elements' => $request->li_elements,
             'obj_elements' => $request->obj_elements,
-            'image' => $url,
+            'obj_images' => [
+                [
+                    'path' => $request->url,
+                    'height' => $request->height,
+                ]
+            ],
         ]);
 
         return Inertia::location('/');

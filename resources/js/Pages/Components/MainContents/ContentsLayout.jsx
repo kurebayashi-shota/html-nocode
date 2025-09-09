@@ -20,7 +20,7 @@ export default function ContentsLayout() {
       obj_elements: [{ title:'', value:'', },],
       obj_images: [{ path:'', height:'' },],
   });
-  
+
   const [imagePreview, setImagePreview] = useState(null);
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -33,14 +33,6 @@ export default function ContentsLayout() {
     const reader = new FileReader();
     reader.onloadend = () => setImagePreview(reader.result);
     reader.readAsDataURL(file);
-    // setData('image', file);
-    // if (file) {
-    //   const reader = new FileReader();
-    //   reader.onloadend = () => {setImagePreview(reader.result);};
-    //   reader.readAsDataURL(file);
-    // } else {
-    //   setImagePreview(null);
-    // }
   };
   const handleHeightChange = (value) => {
     setHeight(value);
@@ -54,11 +46,9 @@ export default function ContentsLayout() {
   const submit = (e) => {
       e.preventDefault();
       if(pages){
-        put(route('posts.update', { id: pages[0].id }), {
+        post(route('posts.update', { id: pages[0].id }), {
+          method:"put",
           forceFormData:true,
-          onBefore: () => console.log("sending:", data),
-  onSuccess: () => console.log("success"),
-  onError: (e) => console.log("error", e),
           onFinish: () => reset('title', ),
         });
       }else{
@@ -207,7 +197,7 @@ export default function ContentsLayout() {
       </div>
     );
   }
-return (
+  return (
     <main className="">
       <GuestLayout className="rounded-t-xl px-[1rem] shadow-xl xl:px-[5rem] xl:mx-[5rem]" noLogo={true} layout_id={pages ? pages.layout_id : ""}>
           <form className='w-full flex' onSubmit={submit}>

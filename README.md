@@ -125,17 +125,16 @@ ID/name/created_at/updated_at
 --React-v1.0.8:画像をオブジェクトで格納
 --DB-v1.0.8:DB の変更
 --Laravel-v1.0.8:バックエンドの調整
---React-v1.0.8:
---DB:DB の構築
---Laravel:リレーション定義
---DB:プロジェクトとの連携
---DB:データ確認
+--React-v1.0.8:プレビューと登録の調整
+--React-v1.0.9:編集の調整
+--React-v1.1.0:プロジェクト作成画面の追加
+--Laravel-v1.1.0:バックエンドの調整
+--DB-v1.1.0:Project テーブルの追加と Page テーブルとのリレーション
 
 # 残タスク
 
 -   ナビゲーションバーのホバーを修正
 -   リストの最大個数指定
--   画像の保存
 -   目次の作成
 -   プロジェクト毎の作成
 -   アカウントとの紐づけ
@@ -158,7 +157,7 @@ ID/name/created_at/updated_at
 
 ### Deprecated — 非推奨になった機能
 
-## [1.0.8] - 2025-09-01
+## [1.1.0] - 2025-09-09
 
 ### Added
 
@@ -167,6 +166,23 @@ ID/name/created_at/updated_at
 ### change
 
 -
+
+## [1.0.9] - 2025-09-08
+
+### change
+
+-   PageController の update メソッドの変更
+-   ContentsLayout の編集時の put を post に変更し method:"put" で追加
+
+## [1.0.8] - 2025-09-01
+
+### Added
+
+-   カラム変更のマイグレーションファイルの追加
+
+### change
+
+-   iamge,image_height を obj_images に変更
 
 ## [1.0.7] - 2025-08-21
 

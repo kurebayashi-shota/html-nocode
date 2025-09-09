@@ -26,7 +26,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::post('/posts',[PageController::class, 'store'])->name('posts.store');
-Route::put('/update/{id}',[PageController::class, 'update'])->name('posts.update');
+Route::post('/update/{id}',[PageController::class, 'update'])->name('posts.update');
 Route::get('/preview',[PageController::class, 'index'])->name('preview');
 Route::get('/preview/{id}',[PageController::class, 'show']);
 Route::get('/edit/{id}',[PageController::class, 'edit']);

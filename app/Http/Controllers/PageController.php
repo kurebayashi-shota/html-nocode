@@ -87,8 +87,9 @@ class PageController extends Controller
 
     public function update(Request $request, $id)
     {
-        dd($request);
         $page = Page::find($id);
+        $path = $request->file('obj_images.0.path')->store('images', 'public');
+        $url = Storage::url($path);
 
         $page->update([
             'agenda' => $request->agenda,
@@ -99,8 +100,8 @@ class PageController extends Controller
             'obj_elements' => $request->obj_elements,
             'obj_images' => [
                 [
-                    'path' => $request->url,
-                    'height' => $request->height,
+                    'path' => $url,
+                    'height' => $request->input('obj_images.0.height'),
                 ]
             ],
         ]);

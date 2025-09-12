@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\LayoutController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\ProjectController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -13,7 +14,8 @@ use Inertia\Inertia;
 //         'canRegister' => Route::has('register'),
 //     ]);
 // });  ログインを実装した時に下を上に組み込む?
-Route::get('/',[LayoutController::class, 'index'])->name('/');
+Route::get('/create',[LayoutController::class, 'index'])->name('create');
+Route::get('/create/{id}',[LayoutController::class, 'index'])->name('create.next');
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
@@ -25,6 +27,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::get('/',function(){return Inertia::render('Components/MainContents/NewProoject');})->name('/');
+Route::post('/store',[ProjectController::class, 'store'])->name('home.store');
 Route::post('/posts',[PageController::class, 'store'])->name('posts.store');
 Route::post('/update/{id}',[PageController::class, 'update'])->name('posts.update');
 Route::get('/preview',[PageController::class, 'index'])->name('preview');

@@ -47,7 +47,8 @@ class PageController extends Controller
         $path = $request->file('obj_images.0.path')->store('images','public');
         $url = Storage::url($path);
         $height = $obj_images[0]['height'] ?? '';
-
+        $project_id = $request->input('project_id');
+    
         Page::create([
             'agenda' => $agenda,
             'title' => $title,
@@ -61,9 +62,13 @@ class PageController extends Controller
                     'height' => $height,
                 ]
             ],
+            'project_id' => $project_id,
         ]);
 
-        return Inertia::location('/');
+        return Inertia::location(
+            `{/create?project=${project_id}}`,
+            ['layout_id'=>$layout_id]
+        );
     }
 
     public function edit($id)

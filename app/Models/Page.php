@@ -15,6 +15,7 @@ class Page extends Model
         'li_elements',
         'obj_elements',
         'obj_images',
+        'project_id',
     ];
     protected $casts = [ 
         'li_elements' => 'array',
@@ -25,5 +26,9 @@ class Page extends Model
     public function layout()
     {
         return $this->belongsTo(Layout::class);
+    }
+    public function project()
+    {
+        return $this->belongsTo(Project::class);
     }
 }

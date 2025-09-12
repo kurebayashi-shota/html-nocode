@@ -133,15 +133,14 @@ ID/name/created_at/updated_at
 
 # 残タスク
 
--   ナビゲーションバーのホバーを修正
--   リストの最大個数指定
--   目次の作成
--   プロジェクト毎の作成
 -   アカウントとの紐づけ
+-   projects テーブルに user_id を追加
 -   カラムの見直し
 -   ContenrsLayout.jsx 内の from タグが親要素いっぱいに広がらない
 -   useSelectCode.jsx 内での layout_id の型変換
 -   入力フォーム下部に追加ボタン(画像、li)
+-   ナビゲーションバーのホバーを修正
+-   リストの最大個数指定
 
 [CHANGELOG.md]
 
@@ -157,7 +156,7 @@ ID/name/created_at/updated_at
 
 ### Deprecated — 非推奨になった機能
 
-## [1.1.0] - 2025-09-09
+## [1.1.1] - 2025-09-12
 
 ### Added
 
@@ -166,6 +165,21 @@ ID/name/created_at/updated_at
 ### change
 
 -
+
+## [1.1.0] - 2025-09-09
+
+### Added
+
+-   NewProject.jsx の追加
+-   projects テーブル作成マイグレーションの追加
+-   pages テーブルに project_id カラム挿入マイグレーションの追加
+-   ProjectController の追加
+-   ProjectModel の追加
+-
+
+### change
+
+-   project テーブルとのリレーション調整
 
 ## [1.0.9] - 2025-09-08
 

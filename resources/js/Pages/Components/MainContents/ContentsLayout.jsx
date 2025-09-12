@@ -9,9 +9,16 @@ import TempLayout from '../Template/TempLayout';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 export default function ContentsLayout() {
+  const queryParams = new URLSearchParams(window.location.search);
+  const projectId = queryParams.get('project');
+  
   const [ height, setHeight ] = useState("10");
   const { pages, layout } = usePage().props;
+  const result = usePage();
+  console.log(result);
+  
   const { data, setData, post, put, processing, errors, reset } = useForm({
+      project_id: projectId,
       layout_id: pages? pages[0].layout_id : 2,
       agenda: '',
       title: '',
@@ -20,7 +27,7 @@ export default function ContentsLayout() {
       obj_elements: [{ title:'', value:'', },],
       obj_images: [{ path:'', height:'' },],
   });
-
+  
   const [imagePreview, setImagePreview] = useState(null);
   const handleImageChange = (e) => {
     const file = e.target.files[0];

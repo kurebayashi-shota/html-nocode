@@ -11,7 +11,13 @@ export default function HeadeNav({auth}) {
                 href={route('/')}
                 className={headerNavClass}
                 >
-                作成(ホーム)
+                プロジェクト作成
+            </Link>
+            <Link
+                href={route('create')}
+                className={headerNavClass}
+                >
+                ページ作成
             </Link>
             <Link
                 href={route('preview')}

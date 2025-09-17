@@ -130,11 +130,14 @@ ID/name/created_at/updated_at
 --React-v1.1.0:プロジェクト作成画面の追加
 --Laravel-v1.1.0:バックエンドの調整
 --DB-v1.1.0:Project テーブルの追加と Page テーブルとのリレーション
+--React--v1.1.1:project 一覧の作成、編集機能
+--Laravel--v1.1.1:pages との紐づけ
+--Laravel--v1.1.1:project の edit,show メソッドの追加とルーティング
+--Laravel--v1.1.1:users との紐づけ
+--Laravel--v1.1.1:コントローラーの調整
 
 # 残タスク
 
--   アカウントとの紐づけ
--   projects テーブルに user_id を追加
 -   カラムの見直し
 -   ContenrsLayout.jsx 内の from タグが親要素いっぱいに広がらない
 -   useSelectCode.jsx 内での layout_id の型変換
@@ -156,7 +159,7 @@ ID/name/created_at/updated_at
 
 ### Deprecated — 非推奨になった機能
 
-## [1.1.1] - 2025-09-12
+## [1.1.2] - 2025-09-17
 
 ### Added
 
@@ -165,6 +168,18 @@ ID/name/created_at/updated_at
 ### change
 
 -
+
+## [1.1.1] - 2025-09-12
+
+### Added
+
+-   UserController の追加
+-   Projects テーブルに user_id を追加
+
+### change
+
+-   Users テーブルとのリレーションを追加
+-   store メソッドに obj_images を null に出来るように変更
 
 ## [1.1.0] - 2025-09-09
 

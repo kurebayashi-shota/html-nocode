@@ -3,21 +3,18 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
 use App\Models\Project;
 use Inertia\Inertia;
 
-class ProjectController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $project = Project::All();
-        return Inertia::render(
-            'Components/MainContents/PreviewList',
-            ['project' => $project]
-        );
+        //
     }
 
     /**
@@ -33,11 +30,7 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        $name = $request->input("name");
-        $agenda = $request->input("agenda");
-        $user_id = $request->input("user_id");
-        $project = Project::create(["name"=>$name,"agenda"=>$agenda,"user_id"=>$user_id,]);
-        return Inertia::location(route('create',['project'=>$project->id]));
+        //
     }
 
     /**
@@ -45,12 +38,12 @@ class ProjectController extends Controller
      */
     public function show(string $id)
     {
-        $project = Project::Find($id);
-        $pages = $project->page;
+        $user_id = User::Find($id);
+        $project = $user_id->project;
         return Inertia::render(
             'Components/MainContents/PreviewList',
-            ['pages' => $pages]
-        );        
+            ['project'=>$project]
+        );
     }
 
     /**

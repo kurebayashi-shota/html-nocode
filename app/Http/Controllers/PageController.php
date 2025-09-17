@@ -21,6 +21,15 @@ class PageController extends Controller
         );
     }
 
+    public function create($id)
+    {
+        return Inertia::location(
+            route('create',
+            ['project' => $id]
+            )
+        );
+    }
+
     public function show($id)
     {
         $pages = Page::all();
@@ -44,10 +53,12 @@ class PageController extends Controller
         $title_detail = $request->input('title_detail');
         $li_elements = $request->input('li_elements');
         $obj_elements = $request->input('obj_elements');
+        $project_id = $request->input('project_id');
+        if($request->file){
         $path = $request->file('obj_images.0.path')->store('images','public');
         $url = Storage::url($path);
-        $height = $obj_images[0]['height'] ?? '';
-        $project_id = $request->input('project_id');
+        $height = $obj_images[0]['height'] ?? '';}
+        else{$path=null;$url=null;$height=null;}
     
         Page::create([
             'agenda' => $agenda,

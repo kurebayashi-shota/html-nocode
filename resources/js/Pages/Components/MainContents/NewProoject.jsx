@@ -10,6 +10,7 @@ export default function NewProoject({auth}) {
     const { data, setData, post, put, processing, } = useForm({
         name : '',
         agenda : [''],
+        user_id : auth.user? auth.user.id : null,
     });
 
   return (

@@ -13,9 +13,8 @@ export default function ContentsLayout() {
   const projectId = queryParams.get('project');
   
   const [ height, setHeight ] = useState("10");
-  const { pages, layout } = usePage().props;
+  const { pages, layout, id } = usePage().props;
   const result = usePage();
-  console.log(result);
   
   const { data, setData, post, put, processing, errors, reset } = useForm({
       project_id: projectId,

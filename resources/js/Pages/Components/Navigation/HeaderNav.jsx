@@ -11,7 +11,7 @@ export default function HeadeNav({auth}) {
                 href={route('/')}
                 className={headerNavClass}
                 >
-                プロジェクト作成
+                新規作成
             </Link>
             <Link
                 href={route('create')}
@@ -19,21 +19,29 @@ export default function HeadeNav({auth}) {
                 >
                 ページ作成
             </Link>
-            <Link
-                href={route('preview')}
-                className={headerNavClass}
-                >
-                プレビュー
-            </Link>
             {auth.user ? (
-                <Link
-                    href={route('dashboard')}
-                    className={headerNavClass}
-                >
-                    ダッシュボード
-                </Link>
+                <>
+                    <Link
+                        href={`list/${auth.user.id}`}
+                        className={headerNavClass}
+                        >
+                        プレビュー
+                    </Link>
+                    <Link
+                        href={route('dashboard')}
+                        className={headerNavClass}
+                    >
+                        ダッシュボード
+                    </Link>
+                </>
             ) : (
                 <>
+                    <Link
+                        href={route('list')}
+                        className={headerNavClass}
+                        >
+                        プレビュー
+                    </Link>
                     <Link
                         href={route('login')}
                         className={headerNavClass}

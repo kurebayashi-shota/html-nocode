@@ -13,7 +13,10 @@ class LayoutController extends Controller
         $name = Layout::all();
         return Inertia::render(
             'Welcome',
-            ["layouts" => $name,]
+            [
+                "layouts" => $name,
+                "mode" => "create",
+            ]
         );
     }
 }

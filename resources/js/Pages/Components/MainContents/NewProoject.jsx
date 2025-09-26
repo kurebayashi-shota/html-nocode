@@ -1,13 +1,14 @@
 import { useForm } from "@inertiajs/react"
-import HeaderNav from "../Navigation/HeaderNav";
 import GuestLayout from "@/Layouts/GuestLayout";
 import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
 import InputError from "@/Components/InputError";
 import PrimaryButton from "@/Components/PrimaryButton";
 
-export default function NewProoject({auth}) {
-    const { data, setData, post, put, processing, } = useForm({
+export default function NewProoject({data}) {
+  // console.log(data);
+  
+    const {  setData, post, put, processing, } = useForm({
         name : '',
         agenda : [''],
         user_id : auth.user? auth.user.id : null,
@@ -15,11 +16,10 @@ export default function NewProoject({auth}) {
 
   return (
     <>
-      <HeaderNav auth={auth} />
-      <GuestLayout>
+      <GuestLayout noLogo={true}>
         <h2>プロジェクトの作成</h2>
         <form
-          onSubmit={(e)=>{
+            onSubmit={(e)=>{
             e.preventDefault();
             post(route("home.store"),{
               // onFinish: () => reset('name'),

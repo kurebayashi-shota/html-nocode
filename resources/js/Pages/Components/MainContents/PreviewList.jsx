@@ -24,16 +24,16 @@ export default function PreviewList({ pages, auth }) {
                             onChange={()=>setSelectedId(item.id)}
                             name="itemSelect"
                             />
-                            {auth.user ?
+                            {auth.user ?//projectに変更する?
                                 <Link
-                                    href={item.name? `/preview/${item.id}`:`/page/${item.id}`}
+                                    href={item.name? `/preview/list/${item.id}`:`/page/${item.id}`}
                                     >
                                     {item.id}
                                     {item.name ? item.name : item.title}
-                                </Link>                        
+                                </Link>
                             :
                                 <Link
-                                    href={item.name? `/preview/${item.id}`:`/page/${item.id}`}
+                                    href={item.name? `/preview/list/${item.id}`:`/page/${item.id}`}
                                     >
                                     {item.id}
                                     {item.name ? item.name : item.title}

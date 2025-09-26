@@ -32,14 +32,16 @@ class PageController extends Controller
 
     public function show($id)
     {
-        $pages = Page::all();
         $page = Page::Find($id);
-
+        $pages = Page::where('project_id',$page->project_id)->get();
+        $currentIndex = $pages->search(fn($page) => $page->id==$id);
+        // ↑型変換したほうがいい?
         return Inertia::render(
             'Components/Template/TempLayout',
             [
                 'pages'=>$pages,
                 'page'=>$page,
+                'currentIndex'=>$currentIndex,
                 'mode' => "preview"
             ]
         );

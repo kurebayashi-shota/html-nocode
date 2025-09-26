@@ -1,7 +1,11 @@
 import { Link, usePage } from '@inertiajs/react'
 import HomeIcon from '@mui/icons-material/Home';
-export default function Navigation() {
+export default function Navigation({agenda}) {
   const { pages } = usePage().props;
+  function getId(index){
+    return pages[index].id;
+  }
+  
   return (
     <div className="ml-10 -mt-[1rem] w-[4rem] relative group text-center items-center">
         <div className="text-xl font-bold border-black border-[2px] rounded hover:hidden">
@@ -9,13 +13,13 @@ export default function Navigation() {
         </div>
         <div className="text-black absolute -mt-[4rem] opacity-0 transition duration-300 flex w-[31rem] overflow-auto group-hover:opacity-100 bg-white shadow-md border rounded p-2">
           <Link className='my-auto flex-shrink-0 hover:bg-gray-100 hover:rounded-full' href={"/preview/"}><HomeIcon /></Link>
-          {pages.map((page, index)=>(
+          {pages.map((_,index)=>(
             <Link
               key={index}
-              href={`/preview/${page.id}`}
+              href={`/preview/${getId(index)}`}
               className="px-4 py-2 hover:bg-gray-100 hover:rounded-full"
               >
-              {page.id}
+              {index+1}
             </Link>
           ))}
         </div>

@@ -135,11 +135,13 @@ ID/name/created_at/updated_at
 --Laravel--v1.1.1:project の edit,show メソッドの追加とルーティング
 --Laravel--v1.1.1:users との紐づけ
 --Laravel--v1.1.1:コントローラーの調整
+--React--v1.1.2:メインタイトルと目次の追加
 
 # 残タスク
 
 -   カラムの見直し
--   ContenrsLayout.jsx 内の from タグが親要素いっぱいに広がらない
+-   ContentsLayout.jsx 内の from タグが親要素いっぱいに広がらない
+-   ContentsLayout.jsx を整理
 -   useSelectCode.jsx 内での layout_id の型変換
 -   入力フォーム下部に追加ボタン(画像、li)
 -   ナビゲーションバーのホバーを修正
@@ -161,13 +163,18 @@ ID/name/created_at/updated_at
 
 ## [1.1.2] - 2025-09-17
 
+### Fixed
+
+-   目次の追加時に submit が発火するのを修正
+
 ### Added
 
--
+-   Agenda.jsx の追加
 
 ### change
 
--
+-   SimpleLayout.jsx をプロジェクト名に対応
+-   NewProject.jsx を ContentsLayout.jsx に統合
 
 ## [1.1.1] - 2025-09-12
 

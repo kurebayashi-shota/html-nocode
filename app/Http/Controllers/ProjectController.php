@@ -53,6 +53,33 @@ class ProjectController extends Controller
         );        
     }
 
+    public function agendaShow($id)
+    {
+        $project = Project::Find($id);
+        $pages = $project->page;
+        return Inertia::render(
+            'Components/Template/TempLayout',
+            [
+                'project' => $project,
+                'pages' => $pages,
+                'agenda' => 'agenda',
+            ]
+        );
+    }
+    public function indexShow($id)
+    {
+        $project = Project::Find($id);
+        $pages = $project->page;
+        return Inertia::render(
+            'Components/Template/TempLayout',
+            [
+                'project' => $project,
+                'pages' => $pages,
+                'layout_id' => 2,
+            ]
+        );
+    }
+
     /**
      * Show the form for editing the specified resource.
      */

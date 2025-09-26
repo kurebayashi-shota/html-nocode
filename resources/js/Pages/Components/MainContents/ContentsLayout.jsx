@@ -7,24 +7,30 @@ import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import TempLayout from '../Template/TempLayout';
 import DeleteIcon from '@mui/icons-material/Delete';
+import back2 from '@/assets/images/back2.jpg';
+import Agenda from '../Template/Agenda';
+// import NewProoject from './NewProoject';
 
-export default function ContentsLayout() {
+export default function ContentsLayout({auth}) {
   const queryParams = new URLSearchParams(window.location.search);
   const projectId = queryParams.get('project');
   
   const [ height, setHeight ] = useState("10");
-  const { pages, layout, id } = usePage().props;
-  const result = usePage();
+  const { pages, layout, mode } = usePage().props;
   
   const { data, setData, post, put, processing, errors, reset } = useForm({
+      // ページの作成+agenda
       project_id: projectId,
       layout_id: pages? pages[0].layout_id : 2,
-      agenda: '',
       title: '',
       title_detail: '',
       li_elements: [''],
       obj_elements: [{ title:'', value:'', },],
       obj_images: [{ path:'', height:'' },],
+      // プロジェクトの作成
+      name : '',
+      agenda : mode=="create" ? '' : [''],//統合したら配列のみにする
+      user_id : auth.user? auth.user.id : null,
   });
   
   const [imagePreview, setImagePreview] = useState(null);
@@ -103,7 +109,6 @@ export default function ContentsLayout() {
                 isFocused={true}
                 onChange={(e) => setData('title_detail', e.target.value)}
                 inputType="area"
-                required
                 placeholder={pages ? pages.title_detail : ""}
                 />
             <InputError message={errors.name} className="mt-2" />
@@ -203,10 +208,13 @@ export default function ContentsLayout() {
       </div>
     );
   }
+  
   return (
     <main className="">
-      <GuestLayout className="rounded-t-xl px-[1rem] shadow-xl xl:px-[5rem] xl:mx-[5rem]" noLogo={true} layout_id={pages ? pages.layout_id : ""}>
-          <form className='w-full flex' onSubmit={submit}>
+        <GuestLayout className="rounded-t-xl px-[1rem] shadow-xl xl:px-[5rem] xl:mx-[5rem]" noLogo={true} layout_id={pages ? pages.layout_id : ""}>
+        { mode=="create" ?
+          (
+            <form className='w-full flex' onSubmit={submit}>
               <div className='mr-[1rem] bg-[#F9FAFB] rounded-xl'>
                   <InputLabel htmlFor="layout" value="レイアウトの選択" />
                   <TextInput
@@ -267,11 +275,63 @@ export default function ContentsLayout() {
               <PrimaryButton className="mr-0 ml-auto ms-4" disabled={processing}>
                   {pages ? "変更":"登録"}
               </PrimaryButton>
-          </form>
-      </GuestLayout>
+            </form>
+          ):(
+            <>
+              <h2>プロジェクトの作成</h2>
+              <form
+                  onSubmit={(e)=>{
+                  e.preventDefault();
+                  post(route("home.store"),{
+                    // onFinish: () => reset('name'),
+                  });
+                  }}
+                  >
+                <InputLabel htmlFor="title" value="プロジェクト名" />
+                <TextInput onChange={(e)=>setData("name",e.target.value)} />
+                {data.name}
+                <div>
+                  <PrimaryButton
+                    onClick={()=>setData("agenda",[...data.agenda,""])}
+                    type="button"
+                    >
+                      目次の追加
+                  </PrimaryButton>
+                  <div>
+                    <ul>
+                      {data.agenda.map((item,index)=>(
+                        <li key={index}>
+                          <TextInput
+                            onChange={(e)=>{
+                              const agendaValue = [...data.agenda];
+                              agendaValue[index] = e.target.value;
+                              setData("agenda",agendaValue);
+                            }}
+                          />
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+                <PrimaryButton disabled={processing}>登録</PrimaryButton>
+              </form>
+            </>
+          )}
+          </GuestLayout>
       <section className="bg-gray-100 flex items-center justify-center shadow-xl rounded-b-xl xl:mx-[5rem]">
           <TempLayout data={data} image={imagePreview} className="scale-[0.97] rounded-xl xl:scale-[0.9]" />
       </section>
-    </main>
+      {data.agenda && !mode &&
+        <section className="bg-gray-100 flex items-center justify-center shadow-xl rounded-b-xl xl:mx-[5rem]">
+          <div
+            className={`h-screen w-screen shadow-xl bg-cover scale-[0.97] rounded-xl xl:scale-[0.9]`}
+            style={{ backgroundImage: `url(${back2})` }}
+            >
+            <Agenda data={data} />
+          </div>
+        </section>
+      }
+      </main>
   )
 }

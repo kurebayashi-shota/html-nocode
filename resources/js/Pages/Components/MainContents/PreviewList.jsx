@@ -33,7 +33,11 @@ export default function PreviewList({ pages, auth }) {
                                 </Link>
                             :
                                 <Link
-                                    href={item.name? `/preview/list/${item.id}`:`/page/${item.id}`}
+                                    href={
+                                        item.name ?
+                                            `/preview/list/${item.id}`
+                                            :`/page/${item.id}`
+                                        }
                                     >
                                     {item.id}
                                     {item.name ? item.name : item.title}

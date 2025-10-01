@@ -1,4 +1,4 @@
-export default function selectMode({ page, data, mode }) {
+export default function selectMode({ page, data, mode, project }) {
     switch(mode){
         case "edit":
             if(data.obj_images[0].path == "" && page.obj_images[0].path){
@@ -15,5 +15,6 @@ export default function selectMode({ page, data, mode }) {
             }
             return data
         case "preview": return page;
+        case "index": return project;
     }
 }

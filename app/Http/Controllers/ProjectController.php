@@ -76,6 +76,7 @@ class ProjectController extends Controller
                 'project' => $project,
                 'pages' => $pages,
                 'layout_id' => 2,
+                'mode' => 'index',
             ]
         );
     }

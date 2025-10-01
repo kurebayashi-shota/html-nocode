@@ -2,11 +2,14 @@ import React from 'react';
 import TitleLabel from './Parts/Title/TitleLabel';
 
 export default function SimpleLayout({ className, data, image, mode, }) {
-  const imagesData = image ? image : data.obj_images[0].path;
+  let imagesData;
+  if(image||data.obj_images){
+    imagesData = image ? image : data.obj_images[0].path;
+  }else{null}
   
   return (
     <div className={className}>
-      {mode ? (
+      {mode && mode!=="index" ? (
         <TitleLabel
           className=""
           data={data}
@@ -17,9 +20,9 @@ export default function SimpleLayout({ className, data, image, mode, }) {
       <div
         className="h-[95%] flex flex-col justify-center"
         >
-        <section className='text-center'>
+        <section className='text-center -mt-[5rem]'>
           <h2 className={`font-bold text-[2rem] border-b-[3px] border-b-[tomato] inline-block xl:text-[3rem]`}>
-            {mode ? data.title : data.name}
+            {data.title ? data.title : data.name}
           </h2>
           <div
             className='w-[30rem] mx-auto xl:text-[2rem] xl:w-[50rem]'

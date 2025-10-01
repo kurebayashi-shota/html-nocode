@@ -17,7 +17,7 @@ export default function HeadeNav({auth}) {
                 href={route('create')}
                 className={headerNavClass}
                 >
-                ページ作成
+                ページ作成(開発者用)
             </Link>
             {auth.user ? (
                 <>

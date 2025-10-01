@@ -1,7 +1,8 @@
 import { Link, usePage } from '@inertiajs/react'
 import HomeIcon from '@mui/icons-material/Home';
-export default function Navigation({agenda}) {
+export default function Navigation() {
   const { pages } = usePage().props;
+  const projectId = pages[0].project_id;
   function getId(index){
     return pages[index].id;
   }
@@ -12,7 +13,7 @@ export default function Navigation({agenda}) {
           ・・・
         </div>
         <div className="text-black absolute -mt-[4rem] opacity-0 transition duration-300 flex w-[31rem] overflow-auto group-hover:opacity-100 bg-white shadow-md border rounded p-2">
-          <Link className='my-auto flex-shrink-0 hover:bg-gray-100 hover:rounded-full' href={"/preview/"}><HomeIcon /></Link>
+          <Link className='my-auto flex-shrink-0 hover:bg-gray-100 hover:rounded-full' href={`/preview/index/${projectId}`}><HomeIcon /></Link>
           {pages.map((_,index)=>(
             <Link
               key={index}

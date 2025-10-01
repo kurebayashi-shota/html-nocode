@@ -12,7 +12,7 @@ export default function Footer({ className }) {
     }else if(agenda){
       return `index/${projectId}`
     }else if(project){
-      return pages[length+2].id
+      return pages[length+1].id
     }else{
       return `agenda/${projectId}`
     };
@@ -20,7 +20,7 @@ export default function Footer({ className }) {
   const nextPath = () => {
     if( pages[currentIndex+1] ){
       return pages[currentIndex+1].id
-    }else if(pages[length+2]&& page){
+    }else if(pages[length+1]&& page){
       return `index/${projectId}`
     }else if(!agenda){
       return `agenda/${projectId}`

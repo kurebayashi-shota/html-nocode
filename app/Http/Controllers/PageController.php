@@ -56,10 +56,10 @@ class PageController extends Controller
         $li_elements = $request->input('li_elements');
         $obj_elements = $request->input('obj_elements');
         $project_id = $request->input('project_id');
-        if($request->file){
-        $path = $request->file('obj_images.0.path')->store('images','public');
-        $url = Storage::url($path);
-        $height = $obj_images[0]['height'] ?? '';}
+        if($request->hasFile('obj_images.0.path')){
+            $path = $request->file('obj_images.0.path')->store('images','public');
+            $url = Storage::url($path);
+            $height = $obj_images[0]['height'] ?? '';}
         else{$path=null;$url=null;$height=null;}
     
         Page::create([

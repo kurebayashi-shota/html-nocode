@@ -9,7 +9,7 @@ export default function SimpleLayout({ className, data, image, mode, }) {
   
   return (
     <div className={className}>
-      {mode && mode!=="index" ? (
+      {mode && mode!=="index"&& data.layout_id !== 1 ? (
         <TitleLabel
           className=""
           data={data}

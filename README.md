@@ -136,6 +136,8 @@ ID/name/created_at/updated_at
 --Laravel--v1.1.1:users との紐づけ
 --Laravel--v1.1.1:コントローラーの調整
 --React--v1.1.2:メインタイトルと目次の追加
+--React--v1.1.3:メインタイトルと目次でプレビューと入力への反映修正
+--Laravel--v1.1.4:マイグレーションファイルの統合
 
 # 残タスク
 
@@ -160,6 +162,30 @@ ID/name/created_at/updated_at
 ### Removed — 削除した機能
 
 ### Deprecated — 非推奨になった機能
+
+## [1.1.4] - 2025-10-01
+
+### Added
+
+-
+
+### change
+
+-   既存マイグレーションファイルの修正
+
+## [1.1.3] - 2025-09-25
+
+### Added
+
+-   selectType.jsx に"index"パターンを追加
+-   projectController に index に mode を渡すように追加
+
+### change
+
+-   useSelectType.jsx を selectType.jsx に変更
+-   プロジェクト作成の修正
+-   プレビューの調整
+-   ナビゲーションパスのロジック変更
 
 ## [1.1.2] - 2025-09-17
 

@@ -138,6 +138,7 @@ ID/name/created_at/updated_at
 --React--v1.1.2:メインタイトルと目次の追加
 --React--v1.1.3:メインタイトルと目次でプレビューと入力への反映修正
 --Laravel--v1.1.4:マイグレーションファイルの統合
+--React--v1.1.5:入力フォームの整理
 
 # 残タスク
 
@@ -163,15 +164,27 @@ ID/name/created_at/updated_at
 
 ### Deprecated — 非推奨になった機能
 
+## [1.1.5] - 2025-10-02
+
+### change
+
+-   TextInput.jsx の分割 or 整理
+-   ContentsLayout.jsx の分割
+
 ## [1.1.4] - 2025-10-01
+
+### Fixed
+
+-   Footer の path ロジック修正
 
 ### Added
 
--
+-   create_projects_table マイグレーションファイルの追加
 
 ### change
 
 -   既存マイグレーションファイルの修正
+-   seeder ファイルの統合
 
 ## [1.1.3] - 2025-09-25
 

@@ -13,7 +13,7 @@ class LayoutSeeder extends Seeder
      */
     public function run(): void
     {
-        $layouts = ['タイトル','シンプル','手順','コード','用語',];
+        $layouts = ['インデックス','目次','タイトル','シンプル','手順','コード','用語',];
             foreach ($layouts as $layoutName){
                 Layout::firstOrCreate(['name'=> $layoutName]);
             }

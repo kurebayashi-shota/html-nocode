@@ -31,7 +31,7 @@ export default forwardRef(function TextInput(
         case "radio":
             return(
                 <>
-                {layouts.slice(0,5).map(( layout , index ) =>(
+                {layouts.slice(2,7).map(( layout , index ) =>(
                     <label
                         className='block'
                         key={index}

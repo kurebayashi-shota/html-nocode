@@ -13,11 +13,16 @@ return new class extends Migration
     {
         Schema::create('pages', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
             $table->foreignId('layout_id')->constrained()->onDelete('cascade');
             $table->string('agenda')->nullable();
             $table->string('title')->nullable();
             $table->text('title_detail')->nullable();
+            $table->json('li_elements')->nullable()->after('title_detail');
+            $table->json('obj_elements')->nullable()->after('li_elements');
+            $table->json('obj_images')->nullable()->after('obj_elements');
+            $table->unsignedBigInteger('project_id')->nullable();
+            $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
+            $table->timestamps();
         });
     }
 

@@ -139,6 +139,7 @@ ID/name/created_at/updated_at
 --React--v1.1.3:メインタイトルと目次でプレビューと入力への反映修正
 --Laravel--v1.1.4:マイグレーションファイルの統合
 --React--v1.1.5:入力フォームの整理
+--React--v1.1.6:フロントの全体調整
 
 # 残タスク
 
@@ -164,7 +165,21 @@ ID/name/created_at/updated_at
 
 ### Deprecated — 非推奨になった機能
 
+## [1.1.6] - 2025-10-03
+
+### Added
+
+-
+
+### change
+
+-
+
 ## [1.1.5] - 2025-10-02
+
+### Added
+
+-   AddForm フォルダを作成して切り出しファイルを追加
 
 ### change
 
@@ -176,6 +191,7 @@ ID/name/created_at/updated_at
 ### Fixed
 
 -   Footer の path ロジック修正
+-   画像が保存出来ない修正
 
 ### Added
 

@@ -6,8 +6,6 @@ import InputError from "@/Components/InputError";
 import PrimaryButton from "@/Components/PrimaryButton";
 
 export default function NewProoject({data}) {
-  // console.log(data);
-  
     const {  setData, post, put, processing, } = useForm({
         name : '',
         agenda : [''],

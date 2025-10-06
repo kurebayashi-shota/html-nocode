@@ -38,7 +38,7 @@ export default function ContentsLayout({auth}) {
       agenda : mode=="create" ? '' : [''],//統合したら配列のみにする
       user_id : auth.user? auth.user.id : null,
   });
-  
+	
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if(!file)return;
@@ -59,13 +59,31 @@ export default function ContentsLayout({auth}) {
       return { ...prevData, obj_images: updatedImages};
     });
   };
-  
+
+	const submit = (e) =>{
+		e.preventDefault();
+		if(pages){
+		post(route('posts.update', {id:pages[0].id}),{
+			method:"put",
+			forceFormData:true,
+			onFinish: () =>reset('title'),
+		});
+		}else if(data.name){
+		e.preventDefault();
+		post(route("home.store"),{});
+		}else{
+		post(route("posts.store"),{
+		forceFormData:true,
+		onFinish:() => reset('title'),
+		});
+		}
+	};  
   return (
     <main className="">
         <GuestLayout className="rounded-t-xl px-[1rem] shadow-xl xl:px-[5rem] xl:mx-[5rem]" noLogo={true} layout_id={pages ? pages.layout_id : ""}>
         { mode=="create" ?
           (
-            <form className='w-full flex' onSubmit={(e)=>submit(e,pages, data)}>
+            <form className='w-full flex' onSubmit={submit}>
                 <SelectLayoutForm data={data} pages={pages} errors={errors} setData={setData} layout={layout} />
                 <div>
                   <AddAgenda data={data} pages={pages} errors={errors} setData={setData} />
@@ -97,7 +115,7 @@ export default function ContentsLayout({auth}) {
           ):(
             <>
               <h2>プロジェクトの作成</h2>
-              <form onSubmit={(e)=>submit(e,pages, data)}>
+              <form onSubmit={submit}>
                   <ProjectForm setData={setData} />
                 <div>
                   <AgendaForm setData={setData} data={data} />

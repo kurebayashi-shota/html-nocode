@@ -7,9 +7,9 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
-## About Laravel
+## Laravel について
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Laravel は、表現力豊かでエレガントな構文を備えた Web アプリケーションフレームワークです。私たちは、開発が真に充実したものになるためには、楽しく創造的な経験であるべきだと考えています。Laravel は、多くの Web プロジェクトでよく使われる以下のようなタスクを簡素化することで、開発の負担を軽減します。
 
 -   [Simple, fast routing engine](https://laravel.com/docs/routing).
 -   [Powerful dependency injection container](https://laravel.com/docs/container).
@@ -19,21 +19,21 @@ Laravel is a web application framework with expressive, elegant syntax. We belie
 -   [Robust background job processing](https://laravel.com/docs/queues).
 -   [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Laravel はアクセスしやすく、強力であり、大規模で堅牢なアプリケーションに必要なツールを提供します。
 
-## Learning Laravel
+## Laravel を学ぶ
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Laravel は、あらゆるモダン Web アプリケーションフレームワークの中で最も広範かつ充実した[ドキュメント](https://laravel.com/docs)とビデオチュートリアルライブラリを備えているため、フレームワークの導入が簡単です。
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+また、[Laravel ブートキャンプ](https://bootcamp.laravel.com)もお試しください。最新の Laravel アプリケーションをゼロから構築するためのガイドが提供されます。
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+読むのが面倒な場合は、[Laracasts](https://laracasts.com)が役立ちます。Laracasts には、Laravel、モダン PHP、ユニットテスト、JavaScript など、幅広いトピックに関する数千ものビデオチュートリアルが掲載されています。Laracasts の包括的なビデオライブラリを活用して、スキルを向上させましょう。
 
-## Laravel Sponsors
+## Laravel スポンサー
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+Laravel 開発へのご支援を賜りました下記のスポンサーの皆様に心より感謝申し上げます。スポンサーにご興味をお持ちの方は、[Laravel Partners プログラム](https://partners.laravel.com)をご覧ください。
 
-### Premium Partners
+### プレミアムパートナー
 
 -   **[Vehikl](https://vehikl.com)**
 -   **[Tighten Co.](https://tighten.co)**
@@ -44,21 +44,21 @@ We would like to extend our thanks to the following sponsors for funding Laravel
 -   **[Redberry](https://redberry.international/laravel-development)**
 -   **[Active Logic](https://activelogic.com)**
 
-## Contributing
+## 貢献する
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Laravel フレームワークへの貢献をご検討いただきありがとうございます。貢献ガイドは[Laravel ドキュメント](https://laravel.com/docs/contributions)に記載されています。
 
-## Code of Conduct
+## 行動規範
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Laravel コミュニティがすべての人を歓迎する場となるよう、[行動規範](https://laravel.com/docs/contributions#code-of-conduct)を確認し、遵守してください。
 
-## Security Vulnerabilities
+## セキュリティの脆弱性
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Laravel にセキュリティ上の脆弱性を発見された場合は、[taylor@laravel.com](mailto:taylor@laravel.com) 宛に Taylor Otwell までメールをお送りください。すべてのセキュリティ上の脆弱性は速やかに対処いたします。
 
-## License
+## ライセンス
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Laravel フレームワークは、[MIT ライセンス](https://opensource.org/licenses/MIT) に基づいてライセンスされたオープンソース ソフトウェアです。
 
 [使用技術]
 -Laraval:Breeze
@@ -87,14 +87,15 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 User テーブル
 ID/name/email/pass
 
-?サイト全体
-ID/project/user/
+<!-- ?サイト全体
+ID/project/user/ -->
 
-?プロジェクト
-ID/pages
+Projects テーブル
+ID/name/agenda/project_id/user_id/created_at/updated_at
 
 Pages テーブル
-ID/layout_id/agenda/title/title_detail/created_at/updated_at
+ID/layout_id/agenda/title/title_detail/li_elements
+obj_elements/obj_images/product_id/created_at/updated_at
 
 Layouts テーブル
 ID/name/created_at/updated_at
@@ -425,64 +426,6 @@ git commit -m "v1.2.0 リリース"
 git tag v1.2.0
 git push origin main
 git push origin v1.2.0 # または git push origin --tags
-
----
-
-## ✅ 各テーブルの概要とカラム例
-
-### `websites`
-
-| カラム名   | 型        | 内容                  |
-| ---------- | --------- | --------------------- |
-| id         | BIGINT    | 主キー                |
-| user_id    | BIGINT    | 作成者 ID（外部キー） |
-| title      | STRING    | サイトタイトル        |
-| domain     | STRING    | カスタムドメイン      |
-| created_at | TIMESTAMP | 作成日                |
-
----
-
-### `pages`
-
-| カラム名   | 型     | 内容                            |
-| ---------- | ------ | ------------------------------- |
-| id         | BIGINT | 主キー                          |
-| website_id | BIGINT | 関連するサイト ID               |
-| slug       | STRING | ページのスラッグ（例：`about`） |
-| title      | STRING | 表示用のページタイトル          |
-
----
-
-### `page_sections`
-
-| カラム名 | 型     | 内容                                     |
-| -------- | ------ | ---------------------------------------- |
-| id       | BIGINT | 主キー                                   |
-| page_id  | BIGINT | 対象ページの ID                          |
-| type     | STRING | セクションタイプ（例：`hero`, `footer`） |
-| order    | INT    | ページ内での表示順                       |
-
----
-
-### `section_components`
-
-| カラム名   | 型     | 内容                                        |
-| ---------- | ------ | ------------------------------------------- |
-| id         | BIGINT | 主キー                                      |
-| section_id | BIGINT | 対象セクションの ID                         |
-| type       | STRING | コンポーネントタイプ（例：`text`, `image`） |
-| order      | INT    | セクション内での表示順                      |
-
----
-
-### `component_data`
-
-| カラム名     | 型     | 内容                                     |
-| ------------ | ------ | ---------------------------------------- |
-| id           | BIGINT | 主キー                                   |
-| component_id | BIGINT | 関連コンポーネント ID                    |
-| key          | STRING | データキー（例：`text`, `url`, `color`） |
-| value        | TEXT   | データ値（例：実際の文章や画像 URL）     |
 
 ---
 

@@ -6,7 +6,7 @@ export default function Navigation() {
   function getId(index){
     return pages[index].id;
   }
-  
+console.log(projectId);  
   return (
     <div className="ml-10 -mt-[1rem] w-[4rem] relative group text-center items-center">
         <div className="text-xl font-bold border-black border-[2px] rounded hover:hidden">

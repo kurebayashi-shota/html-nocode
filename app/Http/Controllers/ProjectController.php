@@ -70,6 +70,7 @@ class ProjectController extends Controller
     {
         $project = Project::Find($id);
         $pages = $project->page;
+
         return Inertia::render(
             'Components/Template/TempLayout',
             [

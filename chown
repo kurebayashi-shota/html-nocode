@@ -1,0 +1,2 @@
+chown www-data:www-data /var/www/html/html-nocode/database/database.sqlite
+chmod 664 /var/www/html/html-nocode/database/database.sqlite

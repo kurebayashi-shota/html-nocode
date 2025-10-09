@@ -6,9 +6,11 @@ import selectMode from "../Hooks/selectMode";
 import Agenda from "./Agenda";
 
 export default function TempLayout({ data, className, image, }) {
-  const { page, pages, mode, agenda, project } = usePage().props;
-  let layoutRespons;  
-  if(page || data) layoutRespons = selectType({ inital:data, image, className, mode })
+  const { page, pages, mode, agenda, project, layout_id, } = usePage().props;
+  let layoutRespons;
+  if(page && data) {layoutRespons = selectType({ initial:data, image, className, mode })}
+  else if(page) {layoutRespons = selectType({ initial:page, image, className, mode })}
+  else if(project) {layoutRespons = selectType({ initial:project, image, className, mode, })}
   if(mode && (page || project))data= selectMode({ page, data, mode, project })
   
   return (

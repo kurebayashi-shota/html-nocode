@@ -6,13 +6,14 @@ import selectMode from "../Hooks/selectMode";
 import Agenda from "./Agenda";
 
 export default function TempLayout({ data, className, image, }) {
-  const { page, pages, mode, agenda, project, layout_id, } = usePage().props;
+  const { page, pages, mode, agenda, project, } = usePage().props;
   let layoutRespons;
   if(page && data) {layoutRespons = selectType({ initial:data, image, className, mode })}
   else if(page) {layoutRespons = selectType({ initial:page, image, className, mode })}
-  else if(project && mode=="index") {layoutRespons = selectType({ initial:project, image, className, mode, })}
+  else if(project) {layoutRespons = selectType({ initial:project, image, className, mode, })}
+  else {layoutRespons = selectType({ initial:data, image, className, mode })}
   if(mode && (page || project))data= selectMode({ page, data, mode, project })
-  console.log(agenda);
+  
   return (
     <div>
       <section className={`bg-gray-100 flex items-center justify-center shadow-xl ${mode && "rounded-b-xl" } xl:mx-[5rem]`}>
@@ -30,7 +31,7 @@ export default function TempLayout({ data, className, image, }) {
             }
           </div>
       </section>
-      {data?.agenda && !mode &&
+      {data.agenda && !mode &&
         <section className="bg-gray-100 flex items-center justify-center shadow-xl rounded-b-xl xl:mx-[5rem]">
           <div
             className={`h-screen w-screen shadow-xl bg-cover scale-[0.97] rounded-xl xl:scale-[0.9]`}

@@ -50,19 +50,21 @@ class ProjectController extends Controller
         return Inertia::render(
             'Components/MainContents/PreviewList',
             ['pages' => $pages]
-        );        
+        );
     }
 
     public function agendaShow($id)
     {
         $project = Project::Find($id);
         $pages = $project->page;
+
         return Inertia::render(
             'Components/Template/TempLayout',
             [
                 'project' => $project,
                 'pages' => $pages,
                 'agenda' => 'agenda',
+		'mode' => 'agenda',
             ]
         );
     }

@@ -59,9 +59,9 @@ class PageController extends Controller
         if($request->hasFile('obj_images.0.path')){
             $path = $request->file('obj_images.0.path')->store('images','public');
             $url = Storage::url($path);
-            $height = $obj_images[0]['height'] ?? '';}
-        else{$path=null;$url=null;$height=null;}
-    
+            $height = $request->input('obj_images.0');
+        }else{$path=null;$url=null;$height=null;}
+
         Page::create([
             'agenda' => $agenda,
             'title' => $title,
